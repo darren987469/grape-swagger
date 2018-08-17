@@ -42,12 +42,12 @@ module Grape
     # building info object
     def info_object(infos)
       result = {
-        title:             infos[:title] || 'API title',
-        description:       infos[:description],
-        termsOfServiceUrl: infos[:terms_of_service_url],
-        contact:           contact_object(infos),
-        license:           license_object(infos),
-        version:           infos[:version]
+        title:          infos[:title] || 'API title',
+        description:    infos[:description],
+        termsOfService: infos[:terms_of_service_url],
+        contact:        contact_object(infos),
+        license:        license_object(infos),
+        version:        infos[:version]
       }
 
       GrapeSwagger::DocMethods::Extensions.add_extensions_to_info(infos, result)
@@ -58,18 +58,18 @@ module Grape
     # sub-objects of info object
     # license
     def license_object(infos)
-      object = {
-        name: infos.delete(:license) || '',
-        url:  infos.delete(:license_url)
+      {
+        name: infos[:license],
+        url:  infos[:license_url]
       }.delete_if { |_, value| value.blank? }
     end
 
     # contact
     def contact_object(infos)
       {
-        name: infos.delete(:contact_name),
-        email: infos.delete(:contact_email),
-        url: infos.delete(:contact_url)
+        name: infos[:contact_name],
+        email: infos[:contact_email],
+        url: infos[:contact_url]
       }.delete_if { |_, value| value.blank? }
     end
 

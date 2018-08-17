@@ -7,6 +7,49 @@ describe Grape::Endpoint do
     described_class.new(Grape::Util::InheritableSetting.new, path: '/', method: :get)
   end
 
+  context 'info object' do
+    let(:endpoint) { described_class.new(Grape::Util::InheritableSetting.new, path: '/', method: :get) }
+    let(:infos) do
+      {
+        title: 'title',
+        description: 'description',
+        terms_of_service_url: 'terms_of_service_url',
+        version: 'version',
+        license: 'license',
+        license_url: 'license_url',
+        contact_name: 'contact_name',
+        contact_email: 'contact_email',
+        contact_url: 'contact_url'
+      }
+    end
+
+    describe '#info_object' do
+      subject { endpoint.info_object(infos) }
+
+      it { expect(subject[:title]).to eq infos[:title] }
+      it { expect(subject[:description]).to eq infos[:description] }
+      it { expect(subject[:termsOfService]).to eq infos[:terms_of_service_url] }
+      it { expect(subject[:contact]).to eq endpoint.contact_object(infos) }
+      it { expect(subject[:license]).to eq endpoint.license_object(infos) }
+      it { expect(subject[:version]).to eq infos[:version] }
+    end
+
+    describe '#license_object' do
+      subject { endpoint.license_object(infos) }
+
+      it { expect(subject[:name]).to eq infos[:license] }
+      it { expect(subject[:url]).to eq infos[:license_url] }
+    end
+
+    describe '#contact_object' do
+      subject { endpoint.contact_object(infos) }
+
+      it { expect(subject[:name]).to eq infos[:contact_name] }
+      it { expect(subject[:email]).to eq infos[:contact_email] }
+      it { expect(subject[:url]).to eq infos[:contact_url] }
+    end
+  end
+
   describe '.content_types_for' do
     describe 'defined on target_class' do
       let(:own_json) { 'text/own-json' }

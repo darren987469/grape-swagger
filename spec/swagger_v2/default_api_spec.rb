@@ -24,7 +24,7 @@ describe 'Default API' do
     it 'documents api' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
-        'swagger' => '2.0',
+        'openapi' => '3.0.1',
         'produces' => ['application/json'],
         'host' => 'example.org',
         'tags' => [{ 'name' => 'something', 'description' => 'Operations about somethings' }],
@@ -70,7 +70,7 @@ describe 'Default API' do
 
     it 'documents endpoint' do
       expect(subject).to eq('info' => { 'title' => 'API title', 'version' => '0.0.1' },
-                            'swagger' => '2.0',
+                            'openapi' => '3.0.1',
                             'produces' => ['application/json'],
                             'host' => 'example.org',
                             'tags' => [{ 'name' => 'something', 'description' => 'Operations about somethings' }],
@@ -128,7 +128,7 @@ describe 'Default API' do
     end
 
     it 'documents the terms of service url' do
-      expect(subject['termsOfServiceUrl']).to eql('http://terms.com')
+      expect(subject['termsOfService']).to eql('http://terms.com')
     end
 
     it 'documents the contact email' do

@@ -32,7 +32,7 @@ describe 'docs mounted separately from api' do
     get '/swagger_doc.json'
     expect(JSON.parse(last_response.body)).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
-      'swagger' => '2.0',
+      'openapi' => '3.0.1',
       'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
@@ -54,7 +54,7 @@ describe 'docs mounted separately from api' do
     get '/swagger_doc/simple.json'
     expect(JSON.parse(last_response.body)).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
-      'swagger' => '2.0',
+      'openapi' => '3.0.1',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
       'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',

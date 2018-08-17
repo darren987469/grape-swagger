@@ -76,7 +76,7 @@ describe 'a guarded api endpoint' do
     it 'retrieves swagger-documentation for the endpoint' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
-        'swagger' => '2.0',
+        'openapi' => '3.0.1',
         'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org',
         'tags' => [{ 'name' => 'auth', 'description' => 'Operations about auths' }],
@@ -104,7 +104,7 @@ describe 'a guarded api endpoint' do
     it 'does not retrieve swagger-documentation for the endpoint - only the info_object' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
-        'swagger' => '2.0',
+        'openapi' => '3.0.1',
         'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org'
       )

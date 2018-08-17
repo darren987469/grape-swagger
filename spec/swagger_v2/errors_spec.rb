@@ -35,7 +35,7 @@ describe 'Errors' do
     end
 
     it 'should raise SwaggerSpec exception' do
-      expect { get '/v3/swagger_doc' }.to raise_error(GrapeSwagger::Errors::SwaggerSpec, "Empty model EmptyClass, swagger 2.0 doesn't support empty definitions.")
+      expect { get '/v3/swagger_doc' }.to raise_error(GrapeSwagger::Errors::SwaggerSpec, "Empty model EmptyClass, swagger 3.0.1 doesn't support empty definitions.")
     end
   end
 

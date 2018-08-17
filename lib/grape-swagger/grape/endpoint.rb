@@ -19,13 +19,13 @@ module Grape
       content_types.uniq
     end
 
-    # swagger spec2.0 related parts
+    # swagger spec3.0.1 related parts
     #
     # required keys for SwaggerObject
     def swagger_object(target_class, request, options)
       object = {
+        openapi:             '3.0.1',
         info:                info_object(options[:info].merge(version: options[:doc_version])),
-        swagger:             '2.0',
         produces:            content_types_for(target_class),
         authorizations:      options[:authorizations],
         securityDefinitions: options[:security_definitions],
@@ -351,7 +351,7 @@ module Grape
       properties = parser.new(model, self).call
       unless properties&.any?
         raise GrapeSwagger::Errors::SwaggerSpec,
-              "Empty model #{model_name}, swagger 2.0 doesn't support empty definitions."
+              "Empty model #{model_name}, swagger 3.0.1 doesn't support empty definitions."
       end
 
       @definitions[model_name] = GrapeSwagger::DocMethods::BuildModelDefinition.build(model, properties)

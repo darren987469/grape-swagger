@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'swagger spec v2.0' do
+describe 'swagger spec v3.0.1' do
   describe 'mounted APIs' do
     include_context "#{MODEL_PARSER} swagger example"
 

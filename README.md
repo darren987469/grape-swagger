@@ -51,11 +51,12 @@ grape-swagger | swagger spec | grape                   | grape-entity | represen
 0.25.2        |     2.0      | >= 0.14.0 ... <= 0.18.0 | <= 0.6.0     | >= 2.4.1      |
 0.26.0        |     2.0      | >= 0.16.2               | <= 0.6.1     | >= 2.4.1      |
 0.27.0        |     2.0      | >= 0.16.2               | >= 0.5.0     | >= 2.4.1      |
+0.31.0        |     3.0.1    | >= 0.16.2               | >= 0.5.0     | >= 2.4.1      |
 
 
 ## Swagger-Spec <a name="swagger-spec" />
 
-Grape-swagger generates documentation per [Swagger / OpenAPI Spec 2.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
+Grape-swagger generates documentation per [Swagger / OpenAPI Spec 3.0.1](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md).
 
 <!-- validating it with: http://bigstickcarpet.com/swagger-parser/www/index.html -->
 
@@ -257,7 +258,7 @@ add_swagger_documentation \
 
 
 #### doc_version: <a name="doc_version" />
-Specify the version of the documentation at [info section](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#info-object), default is: `'0.0.1'`
+Specify the version of the documentation at [info section](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md#infoObject), default is: `'0.0.1'`
 ```ruby
 add_swagger_documentation \
    doc_version: '0.0.1'
@@ -292,6 +293,7 @@ add_swagger_documentation \
 
 
 #### security_definitions: <a name="security_definitions" />
+FIXME: update doc to v3
 Specify the [Security Definitions Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#security-definitions-object)
 
 _NOTE: [Swagger-UI is supporting only implicit flow yet](https://github.com/swagger-api/swagger-ui/issues/2406#issuecomment-248651879)_
@@ -308,6 +310,7 @@ add_swagger_documentation \
 ```
 
 #### security: <a name="security" />
+FIXME: update doc to v3
 Specify the [Security Object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#securityRequirementObject)
 
 ```ruby
@@ -561,7 +564,7 @@ get '/kittens' do
 
 #### Overriding parameter type <a name="overriding-param-type" />
 
-You can override paramType, using the documentation hash. See [parameter object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#parameter-object) for available types.
+You can override paramType, using the documentation hash. See [parameter object](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md#parameterObject) for available types.
 
 ```ruby
 params do

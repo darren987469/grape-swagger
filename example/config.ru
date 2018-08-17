@@ -35,7 +35,7 @@ class Base < Grape::API
                             api_version: 'v1',
                             info: {
                               title: 'Horses and Hussars',
-                              description: 'Demo app for dev of grape swagger 2.0'
+                              description: 'Demo app for dev of grape swagger 3.0.1'
                             }
 end
 

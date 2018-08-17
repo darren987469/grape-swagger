@@ -58,8 +58,8 @@ module Grape
     # sub-objects of info object
     # license
     def license_object(infos)
-      {
-        name: infos.delete(:license),
+      object = {
+        name: infos.delete(:license) || '',
         url:  infos.delete(:license_url)
       }.delete_if { |_, value| value.blank? }
     end
@@ -155,7 +155,7 @@ module Grape
 
     def produces_object(route, format)
       return ['application/octet-stream'] if file_response?(route.attributes.success) &&
-                                             !route.attributes.produces.present?
+                                            !route.attributes.produces.present?
 
       mime_types = GrapeSwagger::DocMethods::ProducesConsumes.call(format)
 
@@ -288,8 +288,8 @@ module Grape
       default_type(required)
 
       request_params = unless declared_params.nil? && route.headers.nil?
-                         parse_request_params(required)
-                       end || {}
+                        parse_request_params(required)
+                      end || {}
 
       request_params.empty? ? required : request_params
     end

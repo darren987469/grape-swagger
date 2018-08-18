@@ -91,8 +91,8 @@ describe 'response with headers' do
       expect(subject['paths']['/response_headers']['get']).to eql(
         'description' => 'This returns headers',
         'responses' => {
-          '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/components/schemass/UseResponse' }, 'headers' => header_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemass/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
+          '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'headers' => header_200 },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
         },
         'tags' => ['response_headers'],
         'operationId' => 'getResponseHeaders'

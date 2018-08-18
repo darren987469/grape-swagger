@@ -50,7 +50,7 @@ describe Grape::Endpoint do
     end
   end
 
-  describe '.content_types_for' do
+  describe '#content_types_for' do
     describe 'defined on target_class' do
       let(:own_json) { 'text/own-json' }
       let(:own_xml) { 'text/own-xml' }

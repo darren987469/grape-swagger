@@ -4,7 +4,7 @@ module GrapeSwagger
   module DocMethods
     class ParseParams
       class << self
-        def call(param, settings, path, route, definitions)
+        def call(param, settings, path, route, components)
           method = route.request_method
           additional_documentation = settings.fetch(:documentation, {})
           settings.merge!(additional_documentation)
@@ -21,7 +21,7 @@ module GrapeSwagger
           # optional properties
           document_description(settings)
           document_type_and_format(settings, data_type)
-          document_array_param(value_type, definitions) if value_type[:is_array]
+          document_array_param(value_type, components) if value_type[:is_array]
           document_default_value(settings) unless value_type[:is_array]
           document_range_values(settings) unless value_type[:is_array]
           document_required(settings)
@@ -61,7 +61,7 @@ module GrapeSwagger
           @parsed_param[:format] = settings[:format] if settings[:format].present?
         end
 
-        def document_array_param(value_type, definitions)
+        def document_array_param(value_type, components)
           if value_type[:documentation].present?
             param_type = value_type[:documentation][:param_type]
             doc_type = value_type[:documentation][:type]
@@ -72,8 +72,8 @@ module GrapeSwagger
           param_type ||= value_type[:param_type]
 
           array_items = {}
-          if definitions[value_type[:data_type]]
-            array_items['$ref'] = "#/definitions/#{@parsed_param[:type]}"
+          if components[:schemas][value_type[:data_type]]
+            array_items['$ref'] = "#/components/schemas/#{@parsed_param[:type]}"
           else
             array_items[:type] = type || @parsed_param[:type] == 'array' ? 'string' : @parsed_param[:type]
           end

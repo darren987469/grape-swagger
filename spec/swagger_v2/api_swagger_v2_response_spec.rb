@@ -50,13 +50,13 @@ describe 'response' do
         'description' => 'This returns something',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/definitions/UseItemResponseAsType' } },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' } }
+          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseItemResponseAsType' } },
+          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
         },
         'tags' => ['nested_type'],
         'operationId' => 'getNestedType'
       )
-      expect(subject['definitions']).to eql(swagger_nested_type)
+      expect(subject['components']['schemas']).to eql(swagger_nested_type)
     end
   end
 
@@ -71,13 +71,13 @@ describe 'response' do
         'description' => 'This returns something',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/definitions/UseResponse' } },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' } }
+          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
+          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
         },
         'tags' => ['entity_response'],
         'operationId' => 'getEntityResponse'
       )
-      expect(subject['definitions']).to eql(swagger_entity_as_response_object)
+      expect(subject['components']['schemas']).to eql(swagger_entity_as_response_object)
     end
   end
 
@@ -98,12 +98,12 @@ describe 'response' do
         ],
         'responses' => {
           '201' => { 'description' => 'This returns something' },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' } }
+          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
         },
         'tags' => ['params_given'],
         'operationId' => 'postParamsGiven'
       )
-      expect(subject['definitions']).to eql(swagger_params_as_response_object)
+      expect(subject['components']['schemas']).to eql(swagger_params_as_response_object)
     end
   end
 end

@@ -92,8 +92,8 @@ describe 'response with headers' do
         'description' => 'This returns headers',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/definitions/UseResponse' }, 'headers' => header_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
+          '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/components/schemass/UseResponse' }, 'headers' => header_200 },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemass/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
         },
         'tags' => ['response_headers'],
         'operationId' => 'getResponseHeaders'
@@ -123,7 +123,7 @@ describe 'response with headers' do
         'produces' => ['application/json'],
         'responses' => {
           '204' => { 'description' => 'No content', 'headers' => header_204 },
-          '400' => { 'description' => 'Bad Request', 'headers' => header_400, 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => examples_400 }
+          '400' => { 'description' => 'Bad Request', 'headers' => header_400, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_400 }
         },
         'tags' => ['no_content_response_headers'],
         'operationId' => 'deleteNoContentResponseHeaders'
@@ -153,7 +153,7 @@ describe 'response with headers' do
         'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'A file can have headers too', 'headers' => header_200, 'schema' => { 'type' => 'file' } },
-          '404' => { 'description' => 'NotFound', 'headers' => header_404, 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => examples_404 }
+          '404' => { 'description' => 'NotFound', 'headers' => header_404, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_404 }
         },
         'tags' => ['file_response_headers'],
         'operationId' => 'getFileResponseHeaders'
@@ -182,9 +182,9 @@ describe 'response with headers' do
         'description' => 'This syntax also returns headers',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This syntax also returns headers', 'schema' => { '$ref' => '#/definitions/UseResponse' }, 'headers' => header_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'headers' => header_404 },
-          '400' => { 'description' => 'BadRequest', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'headers' => header_400 }
+          '200' => { 'description' => 'This syntax also returns headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'headers' => header_200 },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'headers' => header_404 },
+          '400' => { 'description' => 'BadRequest', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'headers' => header_400 }
         },
         'tags' => ['response_failure_headers'],
         'operationId' => 'getResponseFailureHeaders'
@@ -203,8 +203,8 @@ describe 'response with headers' do
         'description' => 'This does not return headers',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This does not return headers', 'schema' => { '$ref' => '#/definitions/UseResponse' } },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' } }
+          '200' => { 'description' => 'This does not return headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
         },
         'tags' => ['response_no_headers'],
         'operationId' => 'getResponseNoHeaders'

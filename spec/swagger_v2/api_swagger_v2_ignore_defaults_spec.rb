@@ -42,7 +42,7 @@ describe 'swagger spec v3.0.1' do
   let(:json) { JSON.parse(last_response.body) }
 
   it 'only returns one response if ignore_defaults is specified' do
-    expect(json['paths']['/delay_thing']['post']['responses']).to eq('202' => { 'description' => 'OK', 'schema' => { '$ref' => '#/definitions/Something' } })
+    expect(json['paths']['/delay_thing']['post']['responses']).to eq('202' => { 'description' => 'OK', 'schema' => { '$ref' => '#/components/schemas/Something' } })
     expect(json['paths']['/delay_thing']['post']['responses'].keys).not_to include '201'
   end
 end

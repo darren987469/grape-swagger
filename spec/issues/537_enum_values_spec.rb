@@ -27,13 +27,13 @@ describe '#537 enum values spec' do
     JSON.parse(last_response.body)
   end
 
-  let(:property) { subject['definitions']['Spec']['properties']['enum_property'] }
+  let(:property) { subject['components']['schemas']['Spec']['properties']['enum_property'] }
   specify do
     expect(property).to include 'enum'
     expect(property['enum']).to eql %w[foo bar]
   end
 
-  let(:property_default) { subject['definitions']['Spec']['properties']['enum_property_default'] }
+  let(:property_default) { subject['components']['schemas']['Spec']['properties']['enum_property_default'] }
   specify do
     expect(property_default).to include 'enum'
     expect(property_default['enum']).to eql %w[a b c]
@@ -41,7 +41,7 @@ describe '#537 enum values spec' do
     expect(property_default['default']).to eql 'c'
   end
 
-  let(:own_format) { subject['definitions']['Spec']['properties']['own_format'] }
+  let(:own_format) { subject['components']['schemas']['Spec']['properties']['own_format'] }
   specify do
     expect(own_format).to include 'format'
     expect(own_format['format']).to eql 'log'

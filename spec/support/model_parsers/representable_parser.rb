@@ -367,32 +367,34 @@ RSpec.shared_context 'representable swagger example' do
           }
         }
       },
-      'definitions' => {
-        'QueryInput' => {
-          'type' => 'object',
-          'required' => ['elements'],
-          'properties' => { 'elements' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/QueryInputElement' }, 'description' => 'Set of configuration' } },
-          'description' => 'nested route inside namespace'
-        },
-        'QueryInputElement' => {
-          'type' => 'object',
-          'required' => %w[key value],
-          'properties' => { 'key' => { 'type' => 'string', 'description' => 'Name of parameter' }, 'value' => { 'type' => 'string', 'description' => 'Value of parameter' } }
-        },
-        'ApiError' => {
-          'type' => 'object',
-          'properties' => { 'code' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'status code' }, 'message' => { 'type' => 'string', 'description' => 'error message' } },
-          'description' => 'This gets Things.'
-        },
-        'Something' => {
-          'type' => 'object',
-          'properties' => {
-            'id' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'Identity of Something' },
-            'text' => { 'type' => 'string', 'description' => 'Content of something.' },
-            'links' => { 'type' => 'array', 'items' => { 'description' => '', 'type' => 'link' } },
-            'others' => { 'description' => '', 'type' => 'text' }
+      'components' => {
+        'schemas' => {
+          'QueryInput' => {
+            'type' => 'object',
+            'required' => ['elements'],
+            'properties' => { 'elements' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/QueryInputElement' }, 'description' => 'Set of configuration' } },
+            'description' => 'nested route inside namespace'
           },
-          'description' => 'This gets Things.'
+          'QueryInputElement' => {
+            'type' => 'object',
+            'required' => %w[key value],
+            'properties' => { 'key' => { 'type' => 'string', 'description' => 'Name of parameter' }, 'value' => { 'type' => 'string', 'description' => 'Value of parameter' } }
+          },
+          'ApiError' => {
+            'type' => 'object',
+            'properties' => { 'code' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'status code' }, 'message' => { 'type' => 'string', 'description' => 'error message' } },
+            'description' => 'This gets Things.'
+          },
+          'Something' => {
+            'type' => 'object',
+            'properties' => {
+              'id' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'Identity of Something' },
+              'text' => { 'type' => 'string', 'description' => 'Content of something.' },
+              'links' => { 'type' => 'array', 'items' => { 'description' => '', 'type' => 'link' } },
+              'others' => { 'description' => '', 'type' => 'text' }
+            },
+            'description' => 'This gets Things.'
+          }
         }
       }
     }

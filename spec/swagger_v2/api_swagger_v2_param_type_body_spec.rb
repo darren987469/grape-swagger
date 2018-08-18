@@ -207,11 +207,11 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
     end
 
     specify do
-      expect(subject['definitions']['ApiResponse']).not_to be_nil
+      expect(subject['components']['schemas']['ApiResponse']).not_to be_nil
     end
 
     specify do
-      expect(subject['definitions']['postWithEntityParam']).to eql(request_body_parameters_definition)
+      expect(subject['components']['schemas']['postWithEntityParam']).to eql(request_body_parameters_definition)
     end
   end
 end

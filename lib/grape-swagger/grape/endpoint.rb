@@ -29,13 +29,24 @@ module Grape
     def path_and_definition_objects(namespace_routes, options)
       @paths = {}
       @definitions = {}
+      @components = {
+        schemas: {},
+        parameters: {},
+        securitySchemes: {},
+        requestBodies: {},
+        headers: {},
+        examples: {},
+        links: {},
+        callbacks: {}
+      }
       namespace_routes.each_key do |key|
         routes = namespace_routes[key]
         path_item(routes, options)
       end
 
       add_definitions_from options[:models]
-      [@paths, @definitions]
+      @components.delete_if { |_, value| value.blank? }
+      [@paths, @definitions, @components]
     end
 
     private
@@ -181,7 +192,7 @@ module Grape
         elsif value[:documentation]
           expose_params(value[:documentation][:type])
         end
-        GrapeSwagger::DocMethods::ParseParams.call(param, value, path, route, @definitions)
+        GrapeSwagger::DocMethods::ParseParams.call(param, value, path, route, @components)
       end
 
       if GrapeSwagger::DocMethods::MoveParams.can_be_moved?(parameters, route.request_method)
@@ -212,9 +223,9 @@ module Grape
         end
 
         next if value[:code] == 204
-        next unless !response_model.start_with?('Swagger_doc') && (@definitions[response_model] || value[:model])
+        next unless !response_model.start_with?('Swagger_doc') && (@components[:schemas][response_model] || value[:model])
 
-        @definitions[response_model][:description] = description_object(route)
+        @components[:schemas][response_model][:description] = description_object(route)
 
         memo[value[:code]][:schema] = build_reference(route, value, response_model)
         memo[value[:code]][:examples] = value[:examples] if value[:examples]
@@ -263,7 +274,7 @@ module Grape
 
     def build_reference(route, value, response_model)
       # TODO: proof that the definition exist, if model isn't specified
-      reference = { '$ref' => "#/definitions/#{response_model}" }
+      reference = { '$ref' => "#/components/schemas/#{response_model}" }
       route.options[:is_array] && value[:code] < 300 ? { type: 'array', items: reference } : reference
     end
 
@@ -338,8 +349,8 @@ module Grape
       model = model.is_a?(String) ? model.constantize : model
       model_name = model_name(model)
 
-      return model_name if @definitions.key?(model_name)
-      @definitions[model_name] = nil
+      return model_name if @components[:schemas].key?(model_name)
+      @components[:schemas][model_name] = nil
 
       parser = GrapeSwagger.model_parsers.find(model)
       raise GrapeSwagger::Errors::UnregisteredParser, "No parser registered for #{model_name}." unless parser
@@ -350,7 +361,7 @@ module Grape
               "Empty model #{model_name}, swagger 3.0.1 doesn't support empty model."
       end
 
-      @definitions[model_name] = GrapeSwagger::DocMethods::BuildModelSchema.build(model, properties)
+      @components[:schemas][model_name] = GrapeSwagger::DocMethods::BuildModelSchema.build(model, properties)
 
       model_name
     end

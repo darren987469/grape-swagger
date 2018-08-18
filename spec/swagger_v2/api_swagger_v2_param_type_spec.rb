@@ -119,7 +119,7 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
       expect(subject['paths']['/defined_param_type/{in_path}']['delete']['responses']).to eql(
         '200' => {
           'description' => 'full set of request param types',
-          'schema' => { '$ref' => '#/definitions/UseResponse' }
+          'schema' => { '$ref' => '#/components/schemas/UseResponse' }
         }
       )
     end

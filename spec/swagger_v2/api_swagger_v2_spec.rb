@@ -198,11 +198,11 @@ describe 'swagger spec v3.0.1' do
         end
       end
 
-      describe 'definitions object' do
-        let(:definitions) { subject['definitions'] }
+      describe 'component schemas object' do
+        let(:schemas) { subject['components']['schemas'] }
 
         specify do
-          definitions.each do |model, properties|
+          schemas.each do |model, properties|
             expect(model).to match(/\w+/)
             expect(properties).to have_key('properties')
           end

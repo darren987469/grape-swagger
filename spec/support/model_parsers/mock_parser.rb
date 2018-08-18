@@ -287,36 +287,38 @@ RSpec.shared_context 'mock swagger example' do
           }
         }
       },
-      'definitions' => {
-        'QueryInput' => {
-          'type' => 'object',
-          'properties' => {
-            'mock_data' => {
-              'type' => 'string',
-              'description' => "it's a mock"
-            }
+      'components' => {
+        'schemas' => {
+          'QueryInput' => {
+            'type' => 'object',
+            'properties' => {
+              'mock_data' => {
+                'type' => 'string',
+                'description' => "it's a mock"
+              }
+            },
+            'description' => 'nested route inside namespace'
           },
-          'description' => 'nested route inside namespace'
-        },
-        'ApiError' => {
-          'type' => 'object',
-          'properties' => {
-            'mock_data' => {
-              'type' => 'string',
-              'description' => "it's a mock"
-            }
+          'ApiError' => {
+            'type' => 'object',
+            'properties' => {
+              'mock_data' => {
+                'type' => 'string',
+                'description' => "it's a mock"
+              }
+            },
+            'description' => 'This gets Things.'
           },
-          'description' => 'This gets Things.'
-        },
-        'Something' => {
-          'type' => 'object',
-          'properties' => {
-            'mock_data' => {
-              'type' => 'string',
-              'description' => "it's a mock"
-            }
-          },
-          'description' => 'This gets Things.'
+          'Something' => {
+            'type' => 'object',
+            'properties' => {
+              'mock_data' => {
+                'type' => 'string',
+                'description' => "it's a mock"
+              }
+            },
+            'description' => 'This gets Things.'
+          }
         }
       }
     }

@@ -73,8 +73,8 @@ describe 'response with examples' do
         'description' => 'This returns examples',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This returns examples', 'schema' => { '$ref' => '#/definitions/UseResponse' }, 'examples' => example_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => example_404 }
+          '200' => { 'description' => 'This returns examples', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'examples' => example_200 },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => example_404 }
         },
         'tags' => ['response_examples'],
         'operationId' => 'getResponseExamples'
@@ -103,9 +103,9 @@ describe 'response with examples' do
         'description' => 'This syntax also returns examples',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This syntax also returns examples', 'schema' => { '$ref' => '#/definitions/UseResponse' }, 'examples' => example_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => example_404 },
-          '400' => { 'description' => 'BadRequest', 'schema' => { '$ref' => '#/definitions/ApiError' }, 'examples' => example_400 }
+          '200' => { 'description' => 'This syntax also returns examples', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'examples' => example_200 },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => example_404 },
+          '400' => { 'description' => 'BadRequest', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => example_400 }
         },
         'tags' => ['response_failure_examples'],
         'operationId' => 'getResponseFailureExamples'
@@ -124,8 +124,8 @@ describe 'response with examples' do
         'description' => 'This does not return examples',
         'produces' => ['application/json'],
         'responses' => {
-          '200' => { 'description' => 'This does not return examples', 'schema' => { '$ref' => '#/definitions/UseResponse' } },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/definitions/ApiError' } }
+          '200' => { 'description' => 'This does not return examples', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
+          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
         },
         'tags' => ['response_no_examples'],
         'operationId' => 'getResponseNoExamples'

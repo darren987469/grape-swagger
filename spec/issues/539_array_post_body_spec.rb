@@ -36,14 +36,14 @@ describe '#539 post params given as array' do
   end
 
   let(:parameters) { subject['paths']['/issue_539']['post']['parameters'] }
-  let(:definitions) { subject['definitions'] }
+  let(:components) { subject['components'] }
 
   specify do
     expect(parameters).to eql(
       [
         {
           'in' => 'body', 'name' => 'elements', 'required' => true, 'schema' => {
-            'type' => 'array', 'items' => { '$ref' => '#/definitions/Element' }
+            'type' => 'array', 'items' => { '$ref' => '#/components/schemas/Element' }
           }
         }
       ]
@@ -51,13 +51,15 @@ describe '#539 post params given as array' do
   end
 
   specify do
-    expect(definitions).to eql(
-      'Element' => {
-        'type' => 'object',
-        'properties' => {
-          'id' => { 'type' => 'string' },
-          'description' => { 'type' => 'string' },
-          'role' => { 'type' => 'string' }
+    expect(components).to eql(
+      'schemas' => {
+        'Element' => {
+          'type' => 'object',
+          'properties' => {
+            'id' => { 'type' => 'string' },
+            'description' => { 'type' => 'string' },
+            'role' => { 'type' => 'string' }
+          }
         }
       }
     )

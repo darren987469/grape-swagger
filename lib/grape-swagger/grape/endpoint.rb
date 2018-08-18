@@ -24,10 +24,8 @@ module Grape
       object.delete_if { |_, value| value.blank? }
     end
 
-    # building path and definitions objects
-    def path_and_definition_objects(namespace_routes, options)
+    def path_and_component_objects(namespace_routes, options)
       @paths = {}
-      @definitions = {}
       @components = {
         schemas: {},
         parameters: {},
@@ -45,7 +43,7 @@ module Grape
 
       add_schemas_from options[:models]
       @components.delete_if { |_, value| value.blank? }
-      [@paths, @definitions, @components]
+      [@paths, @components]
     end
 
     private

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Grape::Endpoint#path_and_definitions' do
+describe 'Grape::Endpoint#path_and_component_objects' do
   let(:item) do
     Class.new(Grape::API) do
       version 'v1', using: :path
@@ -25,7 +25,7 @@ describe 'Grape::Endpoint#path_and_definitions' do
   let(:options) { { add_version: true } }
   let(:target_routes) { api.combined_namespace_routes }
 
-  subject { api.endpoints[0].path_and_definition_objects(target_routes, options) }
+  subject { api.endpoints[0].path_and_component_objects(target_routes, options) }
 
   it 'is returning a versioned path' do
     expect(subject[0].keys[0]).to eq '/v1/item'

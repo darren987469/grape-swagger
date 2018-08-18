@@ -42,19 +42,18 @@ module GrapeSwagger
 
       instance_eval(guard) unless guard.nil?
 
-      output_path_definitions = proc do |combi_routes, endpoint|
+      output_path_components = proc do |combi_routes, endpoint|
         output = endpoint.swagger_object(
           target_class,
           endpoint.request,
           options
         )
 
-        paths, definitions, components = endpoint.path_and_definition_objects(combi_routes, options)
+        paths, components = endpoint.path_and_component_objects(combi_routes, options)
         tags                 = tags_from(paths, options)
 
         output[:tags]        = tags unless tags.empty? || paths.blank?
         output[:paths]       = paths unless paths.blank?
-        output[:definitions] = definitions unless definitions.blank?
         output[:components]  = components unless components.blank?
 
         output
@@ -64,7 +63,7 @@ module GrapeSwagger
         header['Access-Control-Allow-Origin']   = '*'
         header['Access-Control-Request-Method'] = '*'
 
-        output_path_definitions.call(target_class.combined_namespace_routes, self)
+        output_path_components.call(target_class.combined_namespace_routes, self)
       end
 
       params do
@@ -77,7 +76,7 @@ module GrapeSwagger
         combined_routes = target_class.combined_namespace_routes[params[:name]]
         error!({ error: 'named resource not exist' }, 400) if combined_routes.nil?
 
-        output_path_definitions.call({ params[:name] => combined_routes }, self)
+        output_path_components.call({ params[:name] => combined_routes }, self)
       end
     end
 

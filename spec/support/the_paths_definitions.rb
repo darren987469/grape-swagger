@@ -5,8 +5,6 @@ RSpec.shared_context 'the api paths/defs' do
     {
       '/in_body' => {
         post: {
-          produces: ['application/json'],
-          consumes: ['application/json'],
           parameters: [
             { in: 'body', name: 'in_body_1', description: 'in_body_1', type: 'integer', format: 'int32', required: true },
             { in: 'body', name: 'in_body_2', description: 'in_body_2', type: 'string', required: false },
@@ -17,7 +15,6 @@ RSpec.shared_context 'the api paths/defs' do
           operationId: 'postInBody'
         },
         get: {
-          produces: ['application/json'],
           responses: { 200 => { description: 'get in path /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
           tags: ['in_body'],
           operationId: 'getInBody'
@@ -25,8 +22,6 @@ RSpec.shared_context 'the api paths/defs' do
       },
       '/in_body/{key}' => {
         put: {
-          produces: ['application/json'],
-          consumes: ['application/json'],
           parameters: [
             { in: 'path', name: 'key', description: nil, type: 'integer', format: 'int32', required: true },
             { in: 'body', name: 'in_body_1', description: 'in_body_1', type: 'integer', format: 'int32', required: true },
@@ -38,7 +33,6 @@ RSpec.shared_context 'the api paths/defs' do
           operationId: 'putInBodyKey'
         },
         get: {
-          produces: ['application/json'],
           parameters: [
             { in: 'path', name: 'key', description: nil, type: 'integer', format: 'int32', required: true }
           ],
@@ -53,8 +47,6 @@ RSpec.shared_context 'the api paths/defs' do
   let(:found_path) do
     {
       post: {
-        produces: ['application/json'],
-        consumes: ['application/json'],
         parameters: [
           { in: 'body', name: 'in_body_1', description: 'in_body_1', type: 'integer', format: 'int32', required: true },
           { in: 'body', name: 'in_body_2', description: 'in_body_2', type: 'string', required: false },

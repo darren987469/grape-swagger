@@ -46,14 +46,12 @@ describe 'a hide mounted api' do
     expect(subject).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
       'openapi' => '3.0.1',
-      'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }, { 'name' => 'lazy', 'description' => 'Operations about lazies' }],
       'paths' => {
         '/simple' => {
           'get' => {
             'description' => 'Show this endpoint',
-            'produces' => ['application/json'],
             'tags' => ['simple'],
             'operationId' => 'getSimple',
             'responses' => { '200' => { 'description' => 'Show this endpoint' } }
@@ -62,7 +60,6 @@ describe 'a hide mounted api' do
         '/lazy' => {
           'get' => {
             'description' => 'Lazily show endpoint',
-            'produces' => ['application/json'],
             'tags' => ['lazy'],
             'operationId' => 'getLazy',
             'responses' => { '200' => { 'description' => 'Lazily show endpoint' } }
@@ -107,14 +104,12 @@ describe 'a hide mounted api with same namespace' do
     expect(JSON.parse(last_response.body)).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
       'openapi' => '3.0.1',
-      'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
       'paths' => {
         '/simple/show' => {
           'get' => {
             'description' => 'Show this endpoint',
-            'produces' => ['application/json'],
             'operationId' => 'getSimpleShow',
             'tags' => ['simple'], 'responses' => { '200' => { 'description' => 'Show this endpoint' } }
           }
@@ -128,14 +123,12 @@ describe 'a hide mounted api with same namespace' do
     expect(JSON.parse(last_response.body)).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
       'openapi' => '3.0.1',
-      'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
       'paths' => {
         '/simple/show' => {
           'get' => {
             'description' => 'Show this endpoint',
-            'produces' => ['application/json'],
             'tags' => ['simple'],
             'operationId' => 'getSimpleShow',
             'responses' => { '200' => { 'description' => 'Show this endpoint' } }

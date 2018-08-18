@@ -12,7 +12,6 @@ module Grape
       object = {
         openapi:             '3.0.1',
         info:                info_object(options[:info].merge(version: options[:doc_version])),
-        produces:            content_types_for(target_class),
         authorizations:      options[:authorizations],
         securityDefinitions: options[:security_definitions],
         security:            options[:security],
@@ -55,20 +54,6 @@ module Grape
       return if models.nil?
 
       models.each { |x| expose_params_from_model(x) }
-    end
-
-    def content_types_for(target_class)
-      content_types = (target_class.content_types || {}).values
-
-      if content_types.empty?
-        formats       = [target_class.format, target_class.default_format].compact.uniq
-        formats       = Grape::Formatter.formatters({}).keys if formats.empty?
-        content_types = Grape::ContentTypes::CONTENT_TYPES.select do |content_type, _mime_type|
-          formats.include? content_type
-        end.values
-      end
-
-      content_types.uniq
     end
 
     def info_object(infos)
@@ -125,8 +110,6 @@ module Grape
       method = {}
       method[:summary]     = summary_object(route)
       method[:description] = description_object(route)
-      method[:produces]    = produces_object(route, options[:produces] || options[:format])
-      method[:consumes]    = consumes_object(route, options[:format])
       method[:parameters]  = params_object(route, path)
       method[:security]    = security_object(route)
       method[:responses]   = response_object(route)
@@ -160,27 +143,6 @@ module Grape
       description ||= ''
 
       description
-    end
-
-    def produces_object(route, format)
-      return ['application/octet-stream'] if file_response?(route.attributes.success) &&
-                                            !route.attributes.produces.present?
-
-      mime_types = GrapeSwagger::DocMethods::ProducesConsumes.call(format)
-
-      route_mime_types = %i[formats content_types produces].map do |producer|
-        possible = route.options[producer]
-        GrapeSwagger::DocMethods::ProducesConsumes.call(possible) if possible.present?
-      end.flatten.compact.uniq
-
-      route_mime_types.present? ? route_mime_types : mime_types
-    end
-
-    SUPPORTS_CONSUMES = %i[post put patch].freeze
-
-    def consumes_object(route, format)
-      return unless SUPPORTS_CONSUMES.include?(route.request_method.downcase.to_sym)
-      GrapeSwagger::DocMethods::ProducesConsumes.call(route.settings.dig(:description, :consumes) || format)
     end
 
     def params_object(route, path)

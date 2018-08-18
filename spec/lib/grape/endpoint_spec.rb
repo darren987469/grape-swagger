@@ -47,39 +47,6 @@ describe Grape::Endpoint do
     end
   end
 
-  describe '#content_types_for' do
-    subject { endpoint.send(:content_types_for, target_class) }
-
-    context 'defined on target_class' do
-      let(:own_json) { 'text/own-json' }
-      let(:own_xml) { 'text/own-xml' }
-      let(:content_types) do
-        {
-          own_json: own_json,
-          own_xml: own_xml
-        }
-      end
-      let(:target_class) { OpenStruct.new(content_types: content_types) }
-
-      it { expect(subject).to eql [own_json, own_xml] }
-    end
-
-    context 'not defined' do
-      context 'format given' do
-        let(:format) { :json }
-        let(:target_class) { OpenStruct.new(format: format) }
-
-        it { expect(subject).to eql ['application/json'] }
-      end
-
-      context 'format not given' do
-        let(:target_class) { OpenStruct.new }
-
-        it { expect(subject).to eql %w[application/xml application/json text/plain] }
-      end
-    end
-  end
-
   describe '#param_type_is_array?' do
     subject { described_class.new(Grape::Util::InheritableSetting.new, path: '/', method: :get) }
 

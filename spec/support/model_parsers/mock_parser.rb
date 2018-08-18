@@ -187,7 +187,6 @@ RSpec.shared_context 'mock swagger example' do
         'version' => '0.0.1'
       },
       'openapi' => '3.0.1',
-      'produces' => ['application/json'],
       'host' => 'example.org',
       'basePath' => '/api',
       'tags' => [
@@ -200,7 +199,6 @@ RSpec.shared_context 'mock swagger example' do
         '/v3/other_thing/{elements}' => {
           'get' => {
             'description' => 'nested route inside namespace',
-            'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'body', 'name' => 'elements', 'description' => 'Set of configuration', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }],
             'responses' => { '200' => { 'description' => 'nested route inside namespace', 'schema' => { '$ref' => '#/definitions/QueryInput' } } },
             'tags' => ['other_thing'],
@@ -212,7 +210,6 @@ RSpec.shared_context 'mock swagger example' do
         '/thing' => {
           'get' => {
             'description' => 'This gets Things.',
-            'produces' => ['application/json'],
             'parameters' => [
               { 'in' => 'query', 'name' => 'id', 'description' => 'Identity of Something', 'type' => 'integer', 'format' => 'int32', 'required' => false },
               { 'in' => 'query', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => false },
@@ -225,8 +222,6 @@ RSpec.shared_context 'mock swagger example' do
           },
           'post' => {
             'description' => 'This creates Thing.',
-            'produces' => ['application/json'],
-            'consumes' => ['application/json'],
             'parameters' => [
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => true },
               { 'in' => 'formData', 'name' => 'links', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }
@@ -239,7 +234,6 @@ RSpec.shared_context 'mock swagger example' do
         '/thing/{id}' => {
           'get' => {
             'description' => 'This gets Thing.',
-            'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '200' => { 'description' => 'getting a single thing' }, '401' => { 'description' => 'Unauthorized' } },
             'tags' => ['thing'],
@@ -247,8 +241,6 @@ RSpec.shared_context 'mock swagger example' do
           },
           'put' => {
             'description' => 'This updates Thing.',
-            'produces' => ['application/json'],
-            'consumes' => ['application/json'],
             'parameters' => [
               { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => false },
@@ -260,7 +252,6 @@ RSpec.shared_context 'mock swagger example' do
           },
           'delete' => {
             'description' => 'This deletes Thing.',
-            'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '200' => { 'description' => 'This deletes Thing.', 'schema' => { '$ref' => '#/definitions/Something' } } },
             'tags' => ['thing'],
@@ -270,7 +261,6 @@ RSpec.shared_context 'mock swagger example' do
         '/thing2' => {
           'get' => {
             'description' => 'This gets Things.',
-            'produces' => ['application/json'],
             'responses' => { '200' => { 'description' => 'get Horses', 'schema' => { '$ref' => '#/definitions/Something' } }, '401' => { 'description' => 'HorsesOutError', 'schema' => { '$ref' => '#/definitions/ApiError' } } },
             'tags' => ['thing2'],
             'operationId' => 'getThing2'
@@ -279,7 +269,6 @@ RSpec.shared_context 'mock swagger example' do
         '/dummy/{id}' => {
           'delete' => {
             'description' => 'dummy route.',
-            'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '204' => { 'description' => 'dummy route.' }, '401' => { 'description' => 'Unauthorized' } },
             'tags' => ['dummy'],

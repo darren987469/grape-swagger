@@ -555,8 +555,6 @@ desc 'Get all kittens!', {
   success: Entities::Kitten, # or success
   failure: [[401, 'KittenBitesError', Entities::BadKitten]] # or failure
   # also explicit as hash: [{ code: 401, message: 'KittenBitesError', model: Entities::BadKitten }]
-  produces: [ "array", "of", "mime_types" ],
-  consumes: [ "array", "of", "mime_types" ]
   }
 get '/kittens' do
 ```
@@ -859,7 +857,7 @@ end
 
 #### File response <a name="file-response" />
 
-Set `success` to `File` and sets also produces. If produces wasn't set, it defaults to `application/octet-stream`.
+Set `success` to `File`.
 ```ruby
 desc 'Get a file',
     success: File
@@ -870,9 +868,6 @@ end
 ```
 
 ```json
-"produces": [
-  "application/octet-stream"
-],
 "responses": {
   "200": {
     "description": "Get a file",
@@ -1320,7 +1315,6 @@ class NamespaceApi < Grape::API
   namespace :download do
     desc 'download files',
          success: File,
-         produces: ['text/csv']
     get ':id' do
       # file response
     end

@@ -33,14 +33,12 @@ describe 'docs mounted separately from api' do
     expect(JSON.parse(last_response.body)).to eq(
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
       'openapi' => '3.0.1',
-      'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
       'paths' => {
         '/simple' => {
           'get' => {
             'description' => 'This gets something.',
-            'produces' => ['application/json'],
             'responses' => { '200' => { 'description' => 'This gets something.' } },
             'tags' => ['simple'],
             'operationId' => 'getSimple'
@@ -56,13 +54,11 @@ describe 'docs mounted separately from api' do
       'info' => { 'title' => 'API title', 'version' => '0.0.1' },
       'openapi' => '3.0.1',
       'tags' => [{ 'name' => 'simple', 'description' => 'Operations about simples' }],
-      'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
       'host' => 'example.org',
       'paths' => {
         '/simple' => {
           'get' => {
             'description' => 'This gets something.',
-            'produces' => ['application/json'],
             'responses' => {
               '200' => { 'description' => 'This gets something.' }
             },

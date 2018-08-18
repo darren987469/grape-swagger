@@ -77,14 +77,12 @@ describe 'a guarded api endpoint' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
         'openapi' => '3.0.1',
-        'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org',
         'tags' => [{ 'name' => 'auth', 'description' => 'Operations about auths' }],
         'paths' => {
           '/auth' => {
             'get' => {
               'description' => 'Show endpoint if authenticated',
-              'produces' => ['application/json'],
               'tags' => ['auth'],
               'operationId' => 'getAuth',
               'responses' => { '200' => { 'description' => 'Show endpoint if authenticated' } }
@@ -105,7 +103,6 @@ describe 'a guarded api endpoint' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
         'openapi' => '3.0.1',
-        'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org'
       )
     end

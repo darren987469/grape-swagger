@@ -88,7 +88,6 @@ describe 'a simple mounted api' do
           'title' => 'API title', 'version' => '0.0.1'
         },
         'openapi' => '3.0.1',
-        'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org',
         'tags' => [
           { 'name' => 'simple', 'description' => 'Operations about simples' },
@@ -103,7 +102,6 @@ describe 'a simple mounted api' do
           '/' => {
             'get' => {
               'description' => 'Document root',
-              'produces' => ['application/json'],
               'responses' => { '200' => { 'description' => 'Document root' } },
               'operationId' => 'get'
             }
@@ -111,7 +109,6 @@ describe 'a simple mounted api' do
           '/simple' => {
             'get' => {
               'description' => 'This gets something.',
-              'produces' => ['application/json'],
               'tags' => ['simple'],
               'operationId' => 'getSimple',
               'responses' => { '200' => { 'description' => 'This gets something.' } }
@@ -120,7 +117,6 @@ describe 'a simple mounted api' do
           '/simple-test' => {
             'get' => {
               'description' => 'This gets something for URL using - separator.',
-              'produces' => ['application/json'],
               'tags' => ['simple-test'],
               'operationId' => 'getSimpleTest',
               'responses' => { '200' => { 'description' => 'This gets something for URL using - separator.' } }
@@ -128,7 +124,6 @@ describe 'a simple mounted api' do
           },
           '/simple-head-test' => {
             'head' => {
-              'produces' => ['application/json'],
               'responses' => { '200' => { 'description' => 'head SimpleHeadTest' } },
               'tags' => ['simple-head-test'],
               'operationId' => 'headSimpleHeadTest'
@@ -136,7 +131,6 @@ describe 'a simple mounted api' do
           },
           '/simple-options-test' => {
             'options' => {
-              'produces' => ['application/json'],
               'responses' => { '200' => { 'description' => 'option SimpleOptionsTest' } },
               'tags' => ['simple-options-test'],
               'operationId' => 'optionsSimpleOptionsTest'
@@ -145,7 +139,6 @@ describe 'a simple mounted api' do
           '/simple_with_headers' => {
             'get' => {
               'description' => 'this gets something else',
-              'produces' => ['application/json'],
               'parameters' => [
                 { 'in' => 'header', 'name' => 'XAuthToken', 'description' => 'A required header.', 'type' => 'string', 'required' => true },
                 { 'in' => 'header', 'name' => 'XOtherHeader', 'description' => 'An optional header.', 'type' => 'string', 'required' => false }
@@ -162,8 +155,6 @@ describe 'a simple mounted api' do
           '/items' => {
             'post' => {
               'description' => 'this takes an array of parameters',
-              'produces' => ['application/json'],
-              'consumes' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'items[]', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'string' } }],
               'tags' => ['items'],
               'operationId' => 'postItems',
@@ -173,7 +164,6 @@ describe 'a simple mounted api' do
           '/custom' => {
             'get' => {
               'description' => 'this uses a custom parameter',
-              'produces' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'custom', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'CustomType' } }],
               'tags' => ['custom'],
               'operationId' => 'getCustom',
@@ -195,7 +185,6 @@ describe 'a simple mounted api' do
       expect(subject).to eq(
         'info' => { 'title' => 'API title', 'version' => '0.0.1' },
         'openapi' => '3.0.1',
-        'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
         'host' => 'example.org',
         'tags' => [
           { 'name' => 'simple', 'description' => 'Operations about simples' }
@@ -204,7 +193,6 @@ describe 'a simple mounted api' do
           '/simple' => {
             'get' => {
               'description' => 'This gets something.',
-              'produces' => ['application/json'],
               'tags' => ['simple'],
               'operationId' => 'getSimple',
               'responses' => { '200' => { 'description' => 'This gets something.' } }
@@ -226,7 +214,6 @@ describe 'a simple mounted api' do
         expect(subject).to eq(
           'info' => { 'title' => 'API title', 'version' => '0.0.1' },
           'openapi' => '3.0.1',
-          'produces' => ['application/xml', 'application/json', 'application/octet-stream', 'text/plain'],
           'host' => 'example.org',
           'tags' => [
             { 'name' => 'simple-test', 'description' => 'Operations about simple-tests' }
@@ -235,7 +222,6 @@ describe 'a simple mounted api' do
             '/simple-test' => {
               'get' => {
                 'description' => 'This gets something for URL using - separator.',
-                'produces' => ['application/json'],
                 'tags' => ['simple-test'],
                 'operationId' => 'getSimpleTest',
                 'responses' => { '200' => { 'description' => 'This gets something for URL using - separator.' } }
@@ -257,7 +243,6 @@ describe 'a simple mounted api' do
           '/simple_with_headers' => {
             'get' => {
               'description' => 'this gets something else',
-              'produces' => ['application/json'],
               'parameters' => [
                 { 'in' => 'header', 'name' => 'XAuthToken', 'description' => 'A required header.', 'type' => 'string', 'required' => true },
                 { 'in' => 'header', 'name' => 'XOtherHeader', 'description' => 'An optional header.', 'type' => 'string', 'required' => false }
@@ -286,8 +271,6 @@ describe 'a simple mounted api' do
           '/items' => {
             'post' => {
               'description' => 'this takes an array of parameters',
-              'produces' => ['application/json'],
-              'consumes' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'items[]', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'string' } }],
               'tags' => ['items'],
               'operationId' => 'postItems',
@@ -309,7 +292,6 @@ describe 'a simple mounted api' do
           '/custom' => {
             'get' => {
               'description' => 'this uses a custom parameter',
-              'produces' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'custom', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'CustomType' } }],
               'tags' => ['custom'],
               'operationId' => 'getCustom',

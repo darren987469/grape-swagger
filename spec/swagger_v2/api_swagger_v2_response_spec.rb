@@ -48,7 +48,6 @@ describe 'response' do
     specify do
       expect(subject['paths']['/nested_type']['get']).to eql(
         'description' => 'This returns something',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseItemResponseAsType' } },
           '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
@@ -69,7 +68,6 @@ describe 'response' do
     specify do
       expect(subject['paths']['/entity_response']['get']).to eql(
         'description' => 'This returns something',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
           '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
@@ -90,8 +88,6 @@ describe 'response' do
     specify do
       expect(subject['paths']['/params_given']['post']).to eql(
         'description' => 'This returns something',
-        'produces' => ['application/json'],
-        'consumes' => ['application/json'],
         'parameters' => [
           { 'in' => 'formData', 'name' => 'description', 'type' => 'string', 'required' => false },
           { 'in' => 'formData', 'name' => '$responses', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => false }

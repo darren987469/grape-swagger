@@ -90,7 +90,6 @@ describe 'response with headers' do
     specify do
       expect(subject['paths']['/response_headers']['get']).to eql(
         'description' => 'This returns headers',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/components/schemass/UseResponse' }, 'headers' => header_200 },
           '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemass/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
@@ -120,7 +119,6 @@ describe 'response with headers' do
     specify do
       expect(subject['paths']['/no_content_response_headers']['delete']).to eql(
         'description' => 'A 204 can have headers too',
-        'produces' => ['application/json'],
         'responses' => {
           '204' => { 'description' => 'No content', 'headers' => header_204 },
           '400' => { 'description' => 'Bad Request', 'headers' => header_400, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_400 }
@@ -150,7 +148,6 @@ describe 'response with headers' do
     specify do
       expect(subject['paths']['/file_response_headers']['get']).to eql(
         'description' => 'A file can have headers too',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'A file can have headers too', 'headers' => header_200, 'schema' => { 'type' => 'file' } },
           '404' => { 'description' => 'NotFound', 'headers' => header_404, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_404 }
@@ -180,7 +177,6 @@ describe 'response with headers' do
     specify do
       expect(subject['paths']['/response_failure_headers']['get']).to eql(
         'description' => 'This syntax also returns headers',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This syntax also returns headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'headers' => header_200 },
           '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'headers' => header_404 },
@@ -201,7 +197,6 @@ describe 'response with headers' do
     specify do
       expect(subject['paths']['/response_no_headers']['get']).to eql(
         'description' => 'This does not return headers',
-        'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This does not return headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
           '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }

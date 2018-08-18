@@ -43,14 +43,14 @@ module Grape
         path_item(routes, options)
       end
 
-      add_definitions_from options[:models]
+      add_schemas_from options[:models]
       @components.delete_if { |_, value| value.blank? }
       [@paths, @definitions, @components]
     end
 
     private
 
-    def add_definitions_from(models)
+    def add_schemas_from(models)
       return if models.nil?
 
       models.each { |x| expose_params_from_model(x) }

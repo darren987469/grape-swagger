@@ -41,22 +41,22 @@ describe 'document hash and array' do
 
   subject do
     get '/swagger_doc'
-    JSON.parse(last_response.body)
+    JSON.parse(last_response.body)['components']['schemas']
   end
   describe 'generated request definition' do
     it 'has hash' do
-      expect(subject['definitions'].keys).to include('putArbitraryIdIdAndHash')
-      expect(subject['definitions']['putArbitraryIdIdAndHash']['properties'].keys).to include('raw_hash')
+      expect(subject.keys).to include('putArbitraryIdIdAndHash')
+      expect(subject['putArbitraryIdIdAndHash']['properties'].keys).to include('raw_hash')
     end
 
     it 'has array' do
-      expect(subject['definitions'].keys).to include('putArbitraryIdIdAndHash')
-      expect(subject['definitions']['putArbitraryIdIdAndHash']['properties'].keys).to include('raw_array')
+      expect(subject.keys).to include('putArbitraryIdIdAndHash')
+      expect(subject['putArbitraryIdIdAndHash']['properties'].keys).to include('raw_array')
     end
 
     it 'does not have the path parameter' do
-      expect(subject['definitions'].keys).to include('putArbitraryIdIdAndHash')
-      expect(subject['definitions']['putArbitraryIdIdAndHash']).to_not include('id')
+      expect(subject.keys).to include('putArbitraryIdIdAndHash')
+      expect(subject['putArbitraryIdIdAndHash']).to_not include('id')
     end
   end
 end

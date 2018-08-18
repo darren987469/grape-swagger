@@ -114,8 +114,8 @@ describe 'Group Params as Array' do
     end
 
     specify do
-      expect(subject['definitions']['postArrayOfType']['type']).to eql 'array'
-      expect(subject['definitions']['postArrayOfType']['items']).to eql(
+      expect(subject['components']['schemas']['postArrayOfType']['type']).to eql 'array'
+      expect(subject['components']['schemas']['postArrayOfType']['items']).to eql(
         'type' => 'object',
         'properties' => {
           'array_of_string' => {
@@ -137,8 +137,8 @@ describe 'Group Params as Array' do
     end
 
     specify do
-      expect(subject['definitions']['postObjectAndArray']['type']).to eql 'object'
-      expect(subject['definitions']['postObjectAndArray']['properties']).to eql(
+      expect(subject['components']['schemas']['postObjectAndArray']['type']).to eql 'object'
+      expect(subject['components']['schemas']['postObjectAndArray']['properties']).to eql(
         'array_of_string' => {
           'type' => 'array',
           'description' => 'array of strings',
@@ -177,7 +177,7 @@ describe 'Group Params as Array' do
           'name' => 'array_of_entities',
           'type' => 'array',
           'items' => {
-            '$ref' => '#/definitions/ApiError'
+            '$ref' => '#/components/schemas/ApiError'
           },
           'required' => true
         }
@@ -190,7 +190,7 @@ describe 'Group Params as Array' do
     end
 
     specify do
-      expect(subject['definitions']['ApiError']).not_to be_blank
+      expect(subject['components']['schemas']['ApiError']).not_to be_blank
       expect(subject['paths']['/array_of_entities']['post']['parameters']).to eql(parameters)
     end
   end

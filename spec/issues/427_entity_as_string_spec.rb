@@ -32,7 +32,7 @@ describe '#427 nested entity given as string' do
 
   subject do
     get '/swagger_doc'
-    JSON.parse(last_response.body)['definitions']
+    JSON.parse(last_response.body)['components']['schemas']
   end
 
   specify { expect(subject.keys).to include 'RoleEntity', 'WithoutRole' }

@@ -37,7 +37,7 @@ describe 'body parameter definitions' do
 
   context 'a definition is generated for the endpoints parameters defined within the desc block' do
     specify do
-      expect(subject['definitions']['postEndpoint']['properties']).to eql(
+      expect(subject['components']['schemas']['postEndpoint']['properties']).to eql(
         'body_param' => { 'type' => 'string', 'description' => 'param' },
         'body_type_as_const_param' => { 'type' => 'string', 'description' => 'string_param' }
       )

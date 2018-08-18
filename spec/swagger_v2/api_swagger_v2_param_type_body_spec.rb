@@ -85,13 +85,13 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
     specify do
       expect(subject['paths']['/wo_entities/in_body']['post']['parameters']).to eql(
         [
-          { 'name' => 'WoEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/postWoEntitiesInBody' } }
+          { 'name' => 'WoEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/postWoEntitiesInBody' } }
         ]
       )
     end
 
     specify do
-      expect(subject['definitions']['postWoEntitiesInBody']).to eql(
+      expect(subject['components']['schemas']['postWoEntitiesInBody']).to eql(
         'description' => 'post in body /wo entity',
         'type' => 'object',
         'properties' => {
@@ -107,13 +107,13 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
       expect(subject['paths']['/wo_entities/in_body/{key}']['put']['parameters']).to eql(
         [
           { 'in' => 'path', 'name' => 'key', 'type' => 'integer', 'format' => 'int32', 'required' => true },
-          { 'name' => 'WoEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/putWoEntitiesInBody' } }
+          { 'name' => 'WoEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putWoEntitiesInBody' } }
         ]
       )
     end
 
     specify do
-      expect(subject['definitions']['putWoEntitiesInBody']).to eql(
+      expect(subject['components']['schemas']['putWoEntitiesInBody']).to eql(
         'description' => 'put in body /wo entity',
         'type' => 'object',
         'properties' => {
@@ -134,13 +134,13 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
     specify do
       expect(subject['paths']['/with_entities/in_body']['post']['parameters']).to eql(
         [
-          { 'name' => 'WithEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/postWithEntitiesInBody' } }
+          { 'name' => 'WithEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/postWithEntitiesInBody' } }
         ]
       )
     end
 
     specify do
-      expect(subject['definitions']['postWithEntitiesInBody']).to eql(
+      expect(subject['components']['schemas']['postWithEntitiesInBody']).to eql(
         'type' => 'object',
         'properties' => {
           'name' => { 'type' => 'string', 'description' => 'name' }
@@ -154,13 +154,13 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
       expect(subject['paths']['/with_entities/in_body/{id}']['put']['parameters']).to eql(
         [
           { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
-          { 'name' => 'WithEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/putWithEntitiesInBody' } }
+          { 'name' => 'WithEntitiesInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putWithEntitiesInBody' } }
         ]
       )
     end
 
     specify do
-      expect(subject['definitions']['putWithEntitiesInBody']).to eql(
+      expect(subject['components']['schemas']['putWithEntitiesInBody']).to eql(
         'type' => 'object',
         'properties' => {
           'name' => { 'type' => 'string', 'description' => 'name' }
@@ -178,7 +178,7 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
           'in' => 'body',
           'required' => true,
           'schema' => {
-            '$ref' => '#/definitions/postWithEntityParam'
+            '$ref' => '#/components/schemas/postWithEntityParam'
           }
         }
       ]
@@ -189,7 +189,7 @@ describe 'setting of param type, such as `query`, `path`, `formData`, `body`, `h
         'type' => 'object',
         'properties' => {
           'data' => {
-            '$ref' => '#/definitions/ApiResponse',
+            '$ref' => '#/components/schemas/ApiResponse',
             'description' => 'request data'
           }
         },

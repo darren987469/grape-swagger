@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'moving body/formData Params to definitions' do
+describe 'moving body/formData Params to components/schemas' do
   include_context "#{MODEL_PARSER} swagger example"
 
   before :all do
@@ -115,13 +115,13 @@ describe 'moving body/formData Params to definitions' do
       specify do
         expect(subject['paths']['/simple_nested_params/in_body']['post']['parameters']).to eql(
           [
-            { 'name' => 'SimpleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/postSimpleNestedParamsInBody' } }
+            { 'name' => 'SimpleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/postSimpleNestedParamsInBody' } }
           ]
         )
       end
 
       specify do
-        expect(subject['definitions']['postSimpleNestedParamsInBody']).to eql(
+        expect(subject['components']['schemas']['postSimpleNestedParamsInBody']).to eql(
           'type' => 'object',
           'properties' => {
             'contact' => {
@@ -155,13 +155,13 @@ describe 'moving body/formData Params to definitions' do
         expect(subject['paths']['/simple_nested_params/in_body/{id}']['put']['parameters']).to eql(
           [
             { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
-            { 'name' => 'SimpleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/putSimpleNestedParamsInBody' } }
+            { 'name' => 'SimpleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putSimpleNestedParamsInBody' } }
           ]
         )
       end
 
       specify do
-        expect(subject['definitions']['putSimpleNestedParamsInBody']).to eql(
+        expect(subject['components']['schemas']['putSimpleNestedParamsInBody']).to eql(
           'type' => 'object',
           'properties' => {
             'name' => { 'type' => 'string', 'description' => 'name' },
@@ -195,14 +195,14 @@ describe 'moving body/formData Params to definitions' do
               'name' => 'MultipleNestedParamsInBody',
               'in' => 'body',
               'required' => true,
-              'schema' => { '$ref' => '#/definitions/postMultipleNestedParamsInBody' }
+              'schema' => { '$ref' => '#/components/schemas/postMultipleNestedParamsInBody' }
             }
           ]
         )
       end
 
       specify do
-        expect(subject['definitions']['postMultipleNestedParamsInBody']).to eql(
+        expect(subject['components']['schemas']['postMultipleNestedParamsInBody']).to eql(
           'type' => 'object',
           'properties' => {
             'contact' => {
@@ -245,13 +245,13 @@ describe 'moving body/formData Params to definitions' do
         expect(subject['paths']['/multiple_nested_params/in_body/{id}']['put']['parameters']).to eql(
           [
             { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
-            { 'name' => 'MultipleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/definitions/putMultipleNestedParamsInBody' } }
+            { 'name' => 'MultipleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putMultipleNestedParamsInBody' } }
           ]
         )
       end
 
       specify do
-        expect(subject['definitions']['putMultipleNestedParamsInBody']).to eql(
+        expect(subject['components']['schemas']['putMultipleNestedParamsInBody']).to eql(
           'type' => 'object',
           'properties' => {
             'name' => { 'type' => 'string', 'description' => 'name' },

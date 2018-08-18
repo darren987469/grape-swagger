@@ -137,8 +137,8 @@ RSpec.shared_context 'entity swagger example' do
     {
       'ApiError' => { 'type' => 'object', 'properties' => { 'code' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'status code' }, 'message' => { 'type' => 'string', 'description' => 'error message' } } },
       'ResponseItem' => { 'type' => 'object', 'properties' => { 'id' => { 'type' => 'integer', 'format' => 'int32' }, 'name' => { 'type' => 'string' } } },
-      'UseResponse' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, '$responses' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/ResponseItem' } } } },
-      'RecursiveModel' => { 'type' => 'object', 'properties' => { 'name' => { 'type' => 'string', 'description' => 'The name.' }, 'children' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/RecursiveModel' }, 'description' => 'The child nodes.' } } },
+      'UseResponse' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, '$responses' => { 'type' => 'array', 'items' => { '$ref' => '#/components/schemas/ResponseItem' } } } },
+      'RecursiveModel' => { 'type' => 'object', 'properties' => { 'name' => { 'type' => 'string', 'description' => 'The name.' }, 'children' => { 'type' => 'array', 'items' => { '$ref' => '#/components/schemas/RecursiveModel' }, 'description' => 'The child nodes.' } } },
       'DocumentedHashAndArrayModel' => { 'type' => 'object', 'properties' => { 'raw_hash' => { 'type' => 'object', 'description' => 'Example Hash.' }, 'raw_array' => { 'type' => 'array', 'description' => 'Example Array' } } }
     }
   end
@@ -147,7 +147,7 @@ RSpec.shared_context 'entity swagger example' do
     {
       'ApiError' => { 'type' => 'object', 'properties' => { 'code' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'status code' }, 'message' => { 'type' => 'string', 'description' => 'error message' } }, 'description' => 'This returns something' },
       'ResponseItem' => { 'type' => 'object', 'properties' => { 'id' => { 'type' => 'integer', 'format' => 'int32' }, 'name' => { 'type' => 'string' } } },
-      'UseItemResponseAsType' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, 'responses' => { '$ref' => '#/definitions/ResponseItem' } }, 'description' => 'This returns something' }
+      'UseItemResponseAsType' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, 'responses' => { '$ref' => '#/components/schemas/ResponseItem' } }, 'description' => 'This returns something' }
     }
   end
 
@@ -155,7 +155,7 @@ RSpec.shared_context 'entity swagger example' do
     {
       'ApiError' => { 'type' => 'object', 'properties' => { 'code' => { 'type' => 'integer', 'format' => 'int32', 'description' => 'status code' }, 'message' => { 'type' => 'string', 'description' => 'error message' } }, 'description' => 'This returns something' },
       'ResponseItem' => { 'type' => 'object', 'properties' => { 'id' => { 'type' => 'integer', 'format' => 'int32' }, 'name' => { 'type' => 'string' } } },
-      'UseResponse' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, '$responses' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/ResponseItem' } } }, 'description' => 'This returns something' }
+      'UseResponse' => { 'type' => 'object', 'properties' => { 'description' => { 'type' => 'string' }, '$responses' => { 'type' => 'array', 'items' => { '$ref' => '#/components/schemas/ResponseItem' } } }, 'description' => 'This returns something' }
     }
   end
 
@@ -210,7 +210,7 @@ RSpec.shared_context 'entity swagger example' do
             'description' => 'nested route inside namespace',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'body', 'name' => 'elements', 'description' => 'Set of configuration', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }],
-            'responses' => { '200' => { 'description' => 'nested route inside namespace', 'schema' => { '$ref' => '#/definitions/QueryInput' } } },
+            'responses' => { '200' => { 'description' => 'nested route inside namespace', 'schema' => { '$ref' => '#/components/schemas/QueryInput' } } },
             'tags' => ['other_thing'],
             'operationId' => 'getV3OtherThingElements',
             'x-amazon-apigateway-auth' => { 'type' => 'none' },
@@ -227,7 +227,7 @@ RSpec.shared_context 'entity swagger example' do
               { 'in' => 'formData', 'name' => 'links', 'type' => 'array', 'items' => { 'type' => 'link' }, 'required' => false },
               { 'in' => 'query', 'name' => 'others', 'type' => 'text', 'required' => false }
             ],
-            'responses' => { '200' => { 'description' => 'This gets Things.' }, '401' => { 'description' => 'Unauthorized', 'schema' => { '$ref' => '#/definitions/ApiError' } } },
+            'responses' => { '200' => { 'description' => 'This gets Things.' }, '401' => { 'description' => 'Unauthorized', 'schema' => { '$ref' => '#/components/schemas/ApiError' } } },
             'tags' => ['thing'],
             'operationId' => 'getThing'
           },
@@ -239,7 +239,7 @@ RSpec.shared_context 'entity swagger example' do
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => true },
               { 'in' => 'formData', 'name' => 'links', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }
             ],
-            'responses' => { '201' => { 'description' => 'This creates Thing.', 'schema' => { '$ref' => '#/definitions/Something' } }, '422' => { 'description' => 'Unprocessible Entity' } },
+            'responses' => { '201' => { 'description' => 'This creates Thing.', 'schema' => { '$ref' => '#/components/schemas/Something' } }, '422' => { 'description' => 'Unprocessible Entity' } },
             'tags' => ['thing'],
             'operationId' => 'postThing'
           }
@@ -262,7 +262,7 @@ RSpec.shared_context 'entity swagger example' do
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => false },
               { 'in' => 'formData', 'name' => 'links', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => false }
             ],
-            'responses' => { '200' => { 'description' => 'This updates Thing.', 'schema' => { '$ref' => '#/definitions/Something' } } },
+            'responses' => { '200' => { 'description' => 'This updates Thing.', 'schema' => { '$ref' => '#/components/schemas/Something' } } },
             'tags' => ['thing'],
             'operationId' => 'putThingId'
           },
@@ -270,7 +270,7 @@ RSpec.shared_context 'entity swagger example' do
             'description' => 'This deletes Thing.',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
-            'responses' => { '200' => { 'description' => 'This deletes Thing.', 'schema' => { '$ref' => '#/definitions/Something' } } },
+            'responses' => { '200' => { 'description' => 'This deletes Thing.', 'schema' => { '$ref' => '#/components/schemas/Something' } } },
             'tags' => ['thing'],
             'operationId' => 'deleteThingId'
           }
@@ -279,7 +279,7 @@ RSpec.shared_context 'entity swagger example' do
           'get' => {
             'description' => 'This gets Things.',
             'produces' => ['application/json'],
-            'responses' => { '200' => { 'description' => 'get Horses', 'schema' => { '$ref' => '#/definitions/Something' } }, '401' => { 'description' => 'HorsesOutError', 'schema' => { '$ref' => '#/definitions/ApiError' } } },
+            'responses' => { '200' => { 'description' => 'get Horses', 'schema' => { '$ref' => '#/components/schemas/Something' } }, '401' => { 'description' => 'HorsesOutError', 'schema' => { '$ref' => '#/components/schemas/ApiError' } } },
             'tags' => ['thing2'],
             'operationId' => 'getThing2'
           }
@@ -300,7 +300,7 @@ RSpec.shared_context 'entity swagger example' do
           'QueryInput' => {
             'type' => 'object',
             'required' => ['elements'],
-            'properties' => { 'elements' => { 'type' => 'array', 'items' => { '$ref' => '#/definitions/QueryInputElement' }, 'description' => 'Set of configuration' } },
+            'properties' => { 'elements' => { 'type' => 'array', 'items' => { '$ref' => '#/components/schemas/QueryInputElement' }, 'description' => 'Set of configuration' } },
             'description' => 'nested route inside namespace'
           },
           'QueryInputElement' => {

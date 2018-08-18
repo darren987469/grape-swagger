@@ -81,6 +81,8 @@ module GrapeSwagger
       end
     end
 
+    private
+
     def defaults
       {
         info: {},

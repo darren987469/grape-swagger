@@ -7,7 +7,7 @@ module Grape
         documentation_class = create_documentation_class
 
         version_for(options)
-        options = { target_class: self }.merge(options)
+        options[:target_class] ||= self
         @target_class = options[:target_class]
         auth_wrapper = options[:endpoint_auth_wrapper] || Class.new
 

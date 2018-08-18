@@ -5,20 +5,6 @@ require 'active_support/core_ext/string/inflections.rb'
 
 module Grape
   class Endpoint
-    def content_types_for(target_class)
-      content_types = (target_class.content_types || {}).values
-
-      if content_types.empty?
-        formats       = [target_class.format, target_class.default_format].compact.uniq
-        formats       = Grape::Formatter.formatters({}).keys if formats.empty?
-        content_types = Grape::ContentTypes::CONTENT_TYPES.select do |content_type, _mime_type|
-          formats.include? content_type
-        end.values
-      end
-
-      content_types.uniq
-    end
-
     # swagger spec3.0.1 related parts
     #
     # required keys for SwaggerObject
@@ -39,7 +25,41 @@ module Grape
       object.delete_if { |_, value| value.blank? }
     end
 
-    # building info object
+    # building path and definitions objects
+    def path_and_definition_objects(namespace_routes, options)
+      @paths = {}
+      @definitions = {}
+      namespace_routes.each_key do |key|
+        routes = namespace_routes[key]
+        path_item(routes, options)
+      end
+
+      add_definitions_from options[:models]
+      [@paths, @definitions]
+    end
+
+    private
+
+    def add_definitions_from(models)
+      return if models.nil?
+
+      models.each { |x| expose_params_from_model(x) }
+    end
+
+    def content_types_for(target_class)
+      content_types = (target_class.content_types || {}).values
+
+      if content_types.empty?
+        formats       = [target_class.format, target_class.default_format].compact.uniq
+        formats       = Grape::Formatter.formatters({}).keys if formats.empty?
+        content_types = Grape::ContentTypes::CONTENT_TYPES.select do |content_type, _mime_type|
+          formats.include? content_type
+        end.values
+      end
+
+      content_types.uniq
+    end
+
     def info_object(infos)
       result = {
         title:          infos[:title] || 'API title',
@@ -55,8 +75,6 @@ module Grape
       result.delete_if { |_, value| value.blank? }
     end
 
-    # sub-objects of info object
-    # license
     def license_object(infos)
       {
         name: infos[:license],
@@ -64,32 +82,12 @@ module Grape
       }.delete_if { |_, value| value.blank? }
     end
 
-    # contact
     def contact_object(infos)
       {
         name: infos[:contact_name],
         email: infos[:contact_email],
         url: infos[:contact_url]
       }.delete_if { |_, value| value.blank? }
-    end
-
-    # building path and definitions objects
-    def path_and_definition_objects(namespace_routes, options)
-      @paths = {}
-      @definitions = {}
-      namespace_routes.each_key do |key|
-        routes = namespace_routes[key]
-        path_item(routes, options)
-      end
-
-      add_definitions_from options[:models]
-      [@paths, @definitions]
-    end
-
-    def add_definitions_from(models)
-      return if models.nil?
-
-      models.each { |x| expose_params_from_model(x) }
     end
 
     # path object
@@ -262,8 +260,6 @@ module Grape
         end.first
       )
     end
-
-    private
 
     def build_reference(route, value, response_model)
       # TODO: proof that the definition exist, if model isn't specified

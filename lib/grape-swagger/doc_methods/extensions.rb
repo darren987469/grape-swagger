@@ -4,7 +4,7 @@ module GrapeSwagger
   module DocMethods
     class Extensions
       class << self
-        def add(path, definitions, route)
+        def add(path, components, route)
           @route = route
 
           description = route.settings[:description]
@@ -13,7 +13,7 @@ module GrapeSwagger
           settings = route.settings
           add_extensions_to_operation(settings, path, route) if settings && extended?(settings, :x_operation)
           add_extensions_to_path(settings, path) if settings && extended?(settings, :x_path)
-          add_extensions_to_definition(settings, path, definitions) if settings && extended?(settings, :x_def)
+          add_extensions_to_schema(settings, path, components[:schemas]) if settings && extended?(settings, :x_schema)
         end
 
         def add_extensions_to_root(settings, object)
@@ -32,25 +32,27 @@ module GrapeSwagger
           add_extension_to(path, extension(settings, :x_path))
         end
 
-        def add_extensions_to_definition(settings, path, definitions)
-          def_extension = extension(settings, :x_def)
+        def add_extensions_to_schema(settings, path, schemas)
+          schema_extension = extension(settings, :x_schema)
 
-          if def_extension[:x_def].is_a?(Array)
-            def_extension[:x_def].each { |extension| setup_definition(extension, path, definitions) }
+          if schema_extension[:x_schema].is_a?(Array)
+            schema_extension[:x_schema].each { |extension| setup_schema(extension, path, schemas) }
           else
-            setup_definition(def_extension[:x_def], path, definitions)
+            setup_schema(schema_extension[:x_schema], path, schemas)
           end
         end
 
-        def setup_definition(def_extension, path, definitions)
-          return unless def_extension.key?(:for)
-          status = def_extension[:for]
+        private
 
-          definition = find_definition(status, path)
-          add_extension_to(definitions[definition], x_def: def_extension)
+        def setup_schema(schema_extension, path, schemas)
+          return unless schema_extension.key?(:for)
+          status = schema_extension[:for]
+
+          schema = find_schema(status, path)
+          add_extension_to(schemas[schema], x_schema: schema_extension)
         end
 
-        def find_definition(status, path)
+        def find_schema(status, path)
           response = path[method][:responses][status]
           return if response.nil?
 

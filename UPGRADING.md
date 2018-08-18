@@ -1,5 +1,9 @@
 ## Upgrading Grape-swagger
 
+FIXME: upgrade guide
+x_def is replaced_by x_schema
+produces, consumes are removed
+
 ### Upgrading to >= 0.26.1
 
 The format can now be specified,

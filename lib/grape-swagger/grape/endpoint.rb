@@ -102,7 +102,7 @@ module Grape
           @paths[path.to_s] = { verb => method_object }
         end
 
-        GrapeSwagger::DocMethods::Extensions.add(@paths[path.to_s], @definitions, route)
+        GrapeSwagger::DocMethods::Extensions.add(@paths[path.to_s], @components, route)
       end
     end
 
@@ -115,7 +115,7 @@ module Grape
       method[:responses]   = response_object(route)
       method[:tags]        = route.options.fetch(:tags, tag_object(route, path))
       method[:operationId] = GrapeSwagger::DocMethods::OperationId.build(route, path)
-      method[:deprecated] = deprecated_object(route)
+      method[:deprecated]  = deprecated_object(route)
       method.delete_if { |_, value| value.blank? }
 
       [route.request_method.downcase.to_sym, method]

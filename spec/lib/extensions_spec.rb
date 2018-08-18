@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe GrapeSwagger::DocMethods::Extensions do
-  describe '#find_definition' do
+  describe '#find_schema' do
     subject { described_class }
 
     let(:method) { :get }
@@ -15,8 +15,8 @@ describe GrapeSwagger::DocMethods::Extensions do
       let(:path) { { get: { responses: {} } } }
 
       specify do
-        definition = subject.find_definition(status, path)
-        expect(definition).to be_nil
+        schema = subject.send(:find_schema, status, path)
+        expect(schema).to be_nil
       end
     end
 
@@ -25,21 +25,21 @@ describe GrapeSwagger::DocMethods::Extensions do
 
       describe 'ref given' do
         let(:path) do
-          { get: { responses: { 200 => { schema: { '$ref' => "#/definitions/#{model}" } } } } }
+          { get: { responses: { 200 => { schema: { '$ref' => "#/components/schemas/#{model}" } } } } }
         end
         specify do
-          definition = subject.find_definition(status, path)
-          expect(definition).to eql model
+          schema = subject.send(:find_schema, status, path)
+          expect(schema).to eql model
         end
       end
 
       describe 'items given' do
         let(:path) do
-          { get: { responses: { 200 => { schema: { 'items' => { '$ref' => "#/definitions/#{model}" } } } } } }
+          { get: { responses: { 200 => { schema: { 'items' => { '$ref' => "#/components/schemas/#{model}" } } } } } }
         end
         specify do
-          definition = subject.find_definition(status, path)
-          expect(definition).to eql model
+          schema = subject.send(:find_schema, status, path)
+          expect(schema).to eql model
         end
       end
     end
@@ -51,38 +51,38 @@ describe GrapeSwagger::DocMethods::Extensions do
       let(:part) { { foo: 'bar', bar: 'foo' } }
 
       specify do
-        expect(subject.extended?(part)).to be false
-        expect(subject.extension(part)).to be_empty
+        expect(subject.send(:extended?, part)).to be false
+        expect(subject.send(:extension, part)).to be_empty
       end
     end
 
     describe 'return true' do
       specify do
         part = { foo: 'bar', bar: 'foo', x: 'something' }
-        expect(subject.extended?(part)).to be true
-        expect(subject.extension(part)).to eql(x: 'something')
-        expect(subject.extended?(part, :x)).to be true
-        expect(subject.extension(part, :x)).to eql(x: 'something')
+        expect(subject.send(:extended?, part)).to be true
+        expect(subject.send(:extension, part)).to eql(x: 'something')
+        expect(subject.send(:extended?, part, :x)).to be true
+        expect(subject.send(:extension, part, :x)).to eql(x: 'something')
       end
 
       specify do
         part = { foo: 'bar', bar: 'foo', x_path: 'something' }
-        expect(subject.extended?(part, :x_path)).to be true
-        expect(subject.extension(part, :x_path)).to eql(x_path: 'something')
+        expect(subject.send(:extended?, part, :x_path)).to be true
+        expect(subject.send(:extension, part, :x_path)).to eql(x_path: 'something')
       end
 
       specify do
-        part = { foo: 'bar', bar: 'foo', x_def: 'something' }
-        expect(subject.extended?(part, :x_def)).to be true
-        expect(subject.extension(part, :x_def)).to eql(x_def: 'something')
+        part = { foo: 'bar', bar: 'foo', x_schema: 'something' }
+        expect(subject.send(:extended?, part, :x_schema)).to be true
+        expect(subject.send(:extension, part, :x_schema)).to eql(x_schema: 'something')
       end
 
       specify do
-        part = { foo: 'bar', bar: 'foo', x_path: 'something', x_def: 'something' }
-        expect(subject.extended?(part, :x_path)).to be true
-        expect(subject.extension(part, :x_path)).to eql(x_path: 'something')
-        expect(subject.extended?(part, :x_def)).to be true
-        expect(subject.extension(part, :x_def)).to eql(x_def: 'something')
+        part = { foo: 'bar', bar: 'foo', x_path: 'something', x_schema: 'something' }
+        expect(subject.send(:extended?, part, :x_path)).to be true
+        expect(subject.send(:extension, part, :x_path)).to eql(x_path: 'something')
+        expect(subject.send(:extended?, part, :x_schema)).to be true
+        expect(subject.send(:extension, part, :x_schema)).to eql(x_schema: 'something')
       end
     end
   end
@@ -92,7 +92,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'simple' do
         let(:extensions) { { x: { key_1: 'foo' } } }
         let(:result) { { 'x-key_1' => 'foo' } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -102,7 +102,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'multiple' do
         let(:extensions) { { x: { key_1: 'foo', key_2: 'bar' } } }
         let(:result) { { 'x-key_1' => 'foo', 'x-key_2' => 'bar' } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -114,7 +114,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'simple' do
         let(:extensions) { { x: { key_1: { key_2: 'foo' } } } }
         let(:result) { { 'x-key_1' => { key_2: 'foo' } } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -124,7 +124,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'simple multiple' do
         let(:extensions) { { x: { key_1: { key_2: 'foo', key_3: 'bar' } } } }
         let(:result) { { 'x-key_1' => { key_2: 'foo', key_3: 'bar' } } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -134,7 +134,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'simple deeper' do
         let(:extensions) { { x: { key_1: { key_2: { key_3: 'foo' } } } } }
         let(:result) { { 'x-key_1' => { key_2: { key_3: 'foo' } } } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -144,7 +144,7 @@ describe GrapeSwagger::DocMethods::Extensions do
       describe 'multiple' do
         let(:extensions) { { x: { key_1: { key_3: 'foo' }, key_2: { key_3: 'bar' } } } }
         let(:result) { { 'x-key_1' => { key_3: 'foo' }, 'x-key_2' => { key_3: 'bar' } } }
-        subject { described_class.concatenate(extensions) }
+        subject { described_class.send(:concatenate, extensions) }
 
         specify do
           expect(subject).to eql result
@@ -165,7 +165,7 @@ describe GrapeSwagger::DocMethods::Extensions do
           'x-amazon-apigateway-integration' => { type: 'aws', uri: 'foo_bar_uri', httpMethod: 'get' }
         }
       end
-      subject { described_class.concatenate(extensions) }
+      subject { described_class.send(:concatenate, extensions) }
 
       specify do
         expect(subject).to eql result

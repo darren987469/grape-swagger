@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'definition names' do
+describe 'components/schemas' do
   before :all do
     module TestDefinition
       module DummyEntities
@@ -79,7 +79,7 @@ describe 'definition names' do
 
   subject do
     get '/swagger_doc'
-    JSON.parse(last_response.body)['definitions']
+    JSON.parse(last_response.body)['components']['schemas']
   end
 
   specify { expect(subject).to include 'Class1' }

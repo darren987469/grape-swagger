@@ -92,7 +92,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
     end
   end
 
-  describe 'parent_definition_of_params' do
+  describe 'parent_schema_of_params' do
     let(:path) { '/in_body' }
     let(:route_options) { { requirements: {} } }
     describe 'POST' do
@@ -100,14 +100,14 @@ describe GrapeSwagger::DocMethods::MoveParams do
       let(:route) { Grape::Router::Route.new('POST', path.dup, route_options) }
 
       specify do
-        subject.to_definition(path, params, route, definitions)
+        subject.to_schema(path, params, route, components)
         expect(params).to eql(
           [
-            { name: 'InBody', in: 'body', required: true, schema: { '$ref' => '#/definitions/postInBody' } }
+            { name: 'InBody', in: 'body', required: true, schema: { '$ref' => '#/components/schemas/postInBody' } }
           ]
         )
-        expect(subject.definitions['postInBody']).not_to include :description
-        expect(subject.definitions['postInBody']).to eql expected_post_defs
+        expect(subject.schemas['postInBody']).not_to include :description
+        expect(subject.schemas['postInBody']).to eql expected_post_schema
       end
     end
 
@@ -116,20 +116,20 @@ describe GrapeSwagger::DocMethods::MoveParams do
       let(:route) { Grape::Router::Route.new('PUT', path.dup, route_options) }
 
       specify do
-        subject.to_definition(path, params, route, definitions)
+        subject.to_schema(path, params, route, components)
         expect(params).to eql(
           [
             { in: 'path', name: 'key', description: nil, type: 'integer', format: 'int32', required: true },
-            { name: 'InBody', in: 'body', required: true, schema: { '$ref' => '#/definitions/putInBody' } }
+            { name: 'InBody', in: 'body', required: true, schema: { '$ref' => '#/components/schemas/putInBody' } }
           ]
         )
-        expect(subject.definitions['putInBody']).not_to include :description
-        expect(subject.definitions['putInBody']).to eql expected_put_defs
+        expect(subject.schemas['putInBody']).not_to include :description
+        expect(subject.schemas['putInBody']).to eql expected_put_schema
       end
     end
   end
 
-  describe 'nested definitions related' do
+  describe 'nested schemas related' do
     describe 'prepare_nested_names' do
       let(:property) { 'address' }
       before do
@@ -163,34 +163,34 @@ describe GrapeSwagger::DocMethods::MoveParams do
   end
 
   describe 'private methods' do
-    describe 'build_definition' do
+    describe 'build_schema' do
       let(:params) { [{ in: 'body', name: 'address[street][name]', description: 'street', type: 'string', required: true }] }
       before do
-        subject.instance_variable_set(:@definitions, definitions)
-        subject.send(:build_definition, name, params, verb)
+        subject.instance_variable_set(:@schemas, schemas)
+        subject.send(:build_schema, name, params, verb)
       end
 
       describe 'verb given' do
         let(:verb) { 'post' }
         let(:name) { 'Foo' }
-        let(:definitions) { {} }
+        let(:schemas) { {} }
 
         specify do
-          definition = definitions.to_a.first
-          expect(definition.first).to eql 'postFoo'
-          expect(definition.last).to eql(type: 'object', properties: {})
+          schema = schemas.to_a.first
+          expect(schema.first).to eql 'postFoo'
+          expect(schema.last).to eql(type: 'object', properties: {})
         end
       end
 
       describe 'no verb given' do
         let(:name) { 'FooBar' }
-        let(:definitions) { {} }
+        let(:schemas) { {} }
         let(:verb) { nil }
 
         specify do
-          definition = definitions.to_a.first
-          expect(definition.first).to eql 'FooBar'
-          expect(definition.last).to eql(type: 'object', properties: {})
+          schema = schemas.to_a.first
+          expect(schema.first).to eql 'FooBar'
+          expect(schema.last).to eql(type: 'object', properties: {})
         end
       end
     end
@@ -200,7 +200,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
         let(:name) { 'Foo' }
         let(:reference) { 'Bar' }
         let(:expected_param) do
-          { name: name, in: 'body', required: true, schema: { '$ref' => "#/definitions/#{reference}" } }
+          { name: name, in: 'body', required: true, schema: { '$ref' => "#/components/schemas/#{reference}" } }
         end
         specify do
           parameter = subject.send(:build_body_parameter, reference, name, {})
@@ -210,7 +210,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
         describe 'body_name option specified' do
           let(:route_options) { { body_name: 'body' } }
           let(:expected_param) do
-            { name: route_options[:body_name], in: 'body', required: true, schema: { '$ref' => "#/definitions/#{reference}" } }
+            { name: route_options[:body_name], in: 'body', required: true, schema: { '$ref' => "#/components/schemas/#{reference}" } }
           end
           specify do
             parameter = subject.send(:build_body_parameter, reference, name, route_options)
@@ -221,7 +221,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
     end
 
     describe 'parse_model' do
-      let(:ref) { '#/definitions/InBody' }
+      let(:ref) { '#/components/schemas/InBody' }
       describe 'post request' do
         subject(:object) { described_class.send(:parse_model, ref) }
 
@@ -229,7 +229,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
       end
 
       describe 'post request' do
-        let(:put_ref) { '#/definitions/InBody/{id}' }
+        let(:put_ref) { '#/components/schemas/InBody/{id}' }
         subject(:object) { described_class.send(:parse_model, put_ref) }
 
         specify { expect(object).to eql ref }
@@ -418,7 +418,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
               description: 'street lines',
               type: 'array',
               items: {
-                '$ref' => '#/definitions/StreetLine'
+                '$ref' => '#/components/schemas/StreetLine'
               },
               required: true
             }
@@ -433,7 +433,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
               description: 'street lines',
               type: 'object',
               items: {
-                '$ref' => '#/definitions/StreetLine'
+                '$ref' => '#/components/schemas/StreetLine'
               },
               required: true
             }
@@ -588,13 +588,13 @@ describe GrapeSwagger::DocMethods::MoveParams do
       end
     end
 
-    describe 'add_properties_to_definition' do
+    describe 'add_properties_to_schema' do
       before :each do
-        subject.send(:add_properties_to_definition, definition, properties, [])
+        subject.send(:add_properties_to_schema, schema, properties, [])
       end
 
-      context 'when definition has items key' do
-        let(:definition) do
+      context 'when schema has items key' do
+        let(:schema) do
           {
             type: 'array',
             items:  {
@@ -615,7 +615,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
           }
         end
 
-        let(:expected_definition) do
+        let(:expected_schema) do
           {
             type: 'array',
             items: {
@@ -631,13 +631,13 @@ describe GrapeSwagger::DocMethods::MoveParams do
           }
         end
 
-        it 'deep merges properties into definition item properties' do
-          expect(definition).to eq expected_definition
+        it 'deep merges properties into schema item properties' do
+          expect(schema).to eq expected_schema
         end
       end
 
-      context 'when definition does not have items key' do
-        let(:definition) do
+      context 'when schema does not have items key' do
+        let(:schema) do
           {
             type: 'object',
             properties: {
@@ -664,7 +664,7 @@ describe GrapeSwagger::DocMethods::MoveParams do
           }
         end
 
-        let(:expected_definition) do
+        let(:expected_schema) do
           {
             type: 'object',
             properties: {
@@ -683,8 +683,8 @@ describe GrapeSwagger::DocMethods::MoveParams do
           }
         end
 
-        it 'deep merges properties into definition properties' do
-          expect(definition).to eq expected_definition
+        it 'deep merges properties into schema properties' do
+          expect(schema).to eq expected_schema
         end
       end
     end

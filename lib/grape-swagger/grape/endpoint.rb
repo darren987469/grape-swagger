@@ -196,7 +196,7 @@ module Grape
       end
 
       if GrapeSwagger::DocMethods::MoveParams.can_be_moved?(parameters, route.request_method)
-        parameters = GrapeSwagger::DocMethods::MoveParams.to_definition(path, parameters, route, @definitions)
+        parameters = GrapeSwagger::DocMethods::MoveParams.to_schema(path, parameters, route, @components)
       end
 
       parameters

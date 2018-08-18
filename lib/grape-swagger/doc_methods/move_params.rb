@@ -6,21 +6,21 @@ module GrapeSwagger
   module DocMethods
     class MoveParams
       class << self
-        attr_accessor :definitions
+        attr_accessor :schemas
 
         def can_be_moved?(params, http_verb)
           move_methods.include?(http_verb) && includes_body_param?(params)
         end
 
-        def to_definition(path, params, route, definitions)
-          @definitions = definitions
+        def to_schema(path, params, route, components)
+          @schemas = components[:schemas]
           unify!(params)
 
           params_to_move = movable_params(params)
 
           return (params + correct_array_param(params_to_move)) if should_correct_array?(params_to_move)
 
-          params << parent_definition_of_params(params_to_move, path, route)
+          params << parent_schema_of_params(params_to_move, path, route)
 
           params
         end
@@ -37,28 +37,28 @@ module GrapeSwagger
           param
         end
 
-        def parent_definition_of_params(params, path, route)
-          definition_name = OperationId.manipulate(parse_model(path))
-          referenced_definition = build_definition(definition_name, params, route.request_method.downcase)
-          definition = @definitions[referenced_definition]
+        def parent_schema_of_params(params, path, route)
+          schema_name = OperationId.manipulate(parse_model(path))
+          referenced_schema = build_schema(schema_name, params, route.request_method.downcase)
+          schema = @schemas[referenced_schema]
 
-          move_params_to_new(definition, params)
+          move_params_to_new(schema, params)
 
-          definition[:description] = route.description if route.try(:description)
+          schema[:description] = route.description if route.try(:description)
 
-          build_body_parameter(referenced_definition, definition_name, route.options)
+          build_body_parameter(referenced_schema, schema_name, route.options)
         end
 
-        def move_params_to_new(definition, params)
+        def move_params_to_new(schema, params)
           params, nested_params = params.partition { |x| !x[:name].to_s.include?('[') }
 
           unless params.blank?
             properties, required = build_properties(params)
-            add_properties_to_definition(definition, properties, required)
+            add_properties_to_schema(schema, properties, required)
           end
 
           nested_properties = build_nested_properties(nested_params) unless nested_params.blank?
-          add_properties_to_definition(definition, nested_properties, []) unless nested_params.blank?
+          add_properties_to_schema(schema, nested_properties, []) unless nested_params.blank?
         end
 
         def build_properties(params)
@@ -94,8 +94,8 @@ module GrapeSwagger
           property_keys.each_with_object({}) do |x, memo|
             value = param[x]
             next if value.blank?
-            if x == :type && @definitions[value].present?
-              memo['$ref'] = "#/definitions/#{value}"
+            if x == :type && @schemas[value].present?
+              memo['$ref'] = "#/components/schemas/#{value}"
             else
               memo[x] = value
             end
@@ -135,21 +135,21 @@ module GrapeSwagger
           to_delete.each { |x| params.delete(x) }
         end
 
-        def add_properties_to_definition(definition, properties, required)
-          if definition.key?(:items)
-            definition[:items][:properties].deep_merge!(properties)
-            add_to_required(definition[:items], required)
+        def add_properties_to_schema(schema, properties, required)
+          if schema.key?(:items)
+            schema[:items][:properties].deep_merge!(properties)
+            add_to_required(schema[:items], required)
           else
-            definition[:properties].deep_merge!(properties)
-            add_to_required(definition, required)
+            schema[:properties].deep_merge!(properties)
+            add_to_required(schema, required)
           end
         end
 
-        def add_to_required(definition, value)
+        def add_to_required(schema, value)
           return if value.blank?
 
-          definition[:required] ||= []
-          definition[:required].push(*value)
+          schema[:required] ||= []
+          schema[:required].push(*value)
         end
 
         def build_body_parameter(reference, name, options)
@@ -157,13 +157,13 @@ module GrapeSwagger
             x[:name] = options[:body_name] || name
             x[:in] = 'body'
             x[:required] = true
-            x[:schema] = { '$ref' => "#/definitions/#{reference}" }
+            x[:schema] = { '$ref' => "#/components/schemas/#{reference}" }
           end
         end
 
-        def build_definition(name, params, verb = nil)
+        def build_schema(name, params, verb = nil)
           name = "#{verb}#{name}" if verb
-          @definitions[name] = should_expose_as_array?(params) ? array_type : object_type
+          @schemas[name] = should_expose_as_array?(params) ? array_type : object_type
 
           name
         end

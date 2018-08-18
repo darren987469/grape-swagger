@@ -12,13 +12,13 @@ RSpec.shared_context 'the api paths/defs' do
             { in: 'body', name: 'in_body_2', description: 'in_body_2', type: 'string', required: false },
             { in: 'body', name: 'in_body_3', description: 'in_body_3', type: 'string', required: false }
           ],
-          responses: { 201 => { description: 'post in body /wo entity', schema: { '$ref' => '#/definitions/InBody' } } },
+          responses: { 201 => { description: 'post in body /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
           tags: ['in_body'],
           operationId: 'postInBody'
         },
         get: {
           produces: ['application/json'],
-          responses: { 200 => { description: 'get in path /wo entity', schema: { '$ref' => '#/definitions/InBody' } } },
+          responses: { 200 => { description: 'get in path /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
           tags: ['in_body'],
           operationId: 'getInBody'
         }
@@ -33,7 +33,7 @@ RSpec.shared_context 'the api paths/defs' do
             { in: 'body', name: 'in_body_2', description: 'in_body_2', type: 'string', required: false },
             { in: 'body', name: 'in_body_3', description: 'in_body_3', type: 'string', required: false }
           ],
-          responses: { 200 => { description: 'put in body /wo entity', schema: { '$ref' => '#/definitions/InBody' } } },
+          responses: { 200 => { description: 'put in body /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
           tags: ['in_body'],
           operationId: 'putInBodyKey'
         },
@@ -42,7 +42,7 @@ RSpec.shared_context 'the api paths/defs' do
           parameters: [
             { in: 'path', name: 'key', description: nil, type: 'integer', format: 'int32', required: true }
           ],
-          responses: { 200 => { description: 'get in path /wo entity', schema: { '$ref' => '#/definitions/InBody' } } },
+          responses: { 200 => { description: 'get in path /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
           tags: ['in_body'],
           operationId: 'getInBodyKey'
         }
@@ -60,28 +60,30 @@ RSpec.shared_context 'the api paths/defs' do
           { in: 'body', name: 'in_body_2', description: 'in_body_2', type: 'string', required: false },
           { in: 'body', name: 'in_body_3', description: 'in_body_3', type: 'string', required: false }
         ],
-        responses: { 201 => { description: 'post in body /wo entity', schema: { '$ref' => '#/definitions/InBody' } } },
+        responses: { 201 => { description: 'post in body /wo entity', schema: { '$ref' => '#/components/schemas/InBody' } } },
         tags: ['in_body'],
         operationId: 'postInBody'
       }
     }
   end
 
-  let(:definitions) do
+  let(:components) do
     {
-      'InBody' => {
-        type: 'object',
-        properties: {
-          in_body_1: { type: 'integer', format: 'int32' },
-          in_body_2: { type: 'string' },
-          in_body_3: { type: 'string' },
-          key: { type: 'integer', format: 'int32' }
+      schemas: {
+        'InBody' => {
+          type: 'object',
+          properties: {
+            in_body_1: { type: 'integer', format: 'int32' },
+            in_body_2: { type: 'string' },
+            in_body_3: { type: 'string' },
+            key: { type: 'integer', format: 'int32' }
+          }
         }
       }
     }
   end
 
-  let(:expected_post_defs) do
+  let(:expected_post_schema) do
     {
       type: 'object',
       properties: {
@@ -93,7 +95,7 @@ RSpec.shared_context 'the api paths/defs' do
     }
   end
 
-  let(:expected_put_defs) do
+  let(:expected_put_schema) do
     {
       type: 'object',
       properties: {

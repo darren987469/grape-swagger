@@ -347,10 +347,10 @@ module Grape
       properties = parser.new(model, self).call
       unless properties&.any?
         raise GrapeSwagger::Errors::SwaggerSpec,
-              "Empty model #{model_name}, swagger 3.0.1 doesn't support empty definitions."
+              "Empty model #{model_name}, swagger 3.0.1 doesn't support empty model."
       end
 
-      @definitions[model_name] = GrapeSwagger::DocMethods::BuildModelDefinition.build(model, properties)
+      @definitions[model_name] = GrapeSwagger::DocMethods::BuildModelSchema.build(model, properties)
 
       model_name
     end

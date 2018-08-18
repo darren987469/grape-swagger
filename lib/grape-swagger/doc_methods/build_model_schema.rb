@@ -2,7 +2,7 @@
 
 module GrapeSwagger
   module DocMethods
-    class BuildModelDefinition
+    class BuildModelSchema
       class << self
         def build(model, properties)
           definition = { type: 'object', properties: properties }

@@ -5,12 +5,12 @@ module GrapeSwagger
     class BuildModelSchema
       class << self
         def build(model, properties)
-          definition = { type: 'object', properties: properties }
+          schema = { type: 'object', properties: properties }
 
           required = required_attributes(model)
-          definition[:required] = required unless required.blank?
+          schema[:required] = required unless required.blank?
 
-          definition
+          schema
         end
 
         private

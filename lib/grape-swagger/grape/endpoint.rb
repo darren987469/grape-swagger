@@ -41,8 +41,6 @@ module Grape
         next if hidden?(route, options)
 
         path = GrapeSwagger::DocMethods::PathString.path(route, options)
-        @entity = route.entity || route.options[:success]
-
         verb, method_object = method_object(route, options, path)
 
         if @paths.key?(path.to_s)
@@ -155,15 +153,17 @@ module Grape
 
     def success_codes_from_route(route)
       default_code = GrapeSwagger::DocMethods::StatusCodes.get[route.request_method.downcase.to_sym]
-      if @entity.is_a?(Hash)
-        default_code[:code] = @entity[:code] if @entity[:code].present?
-        default_code[:model] = @entity[:model] if @entity[:model].present?
-        default_code[:message] = @entity[:message] || route.description || default_code[:message].sub('{item}', GrapeSwagger::DocMethods::PathString.item(route))
-        default_code[:examples] = @entity[:examples] if @entity[:examples]
-        default_code[:headers] = @entity[:headers] if @entity[:headers]
+      entity = route.entity || route.options[:success]
+
+      if entity.is_a?(Hash)
+        default_code[:code] = entity[:code] if entity[:code].present?
+        default_code[:model] = entity[:model] if entity[:model].present?
+        default_code[:message] = entity[:message] || route.description || default_code[:message].sub('{item}', GrapeSwagger::DocMethods::PathString.item(route))
+        default_code[:examples] = entity[:examples] if entity[:examples]
+        default_code[:headers] = entity[:headers] if entity[:headers]
       else
         default_code = GrapeSwagger::DocMethods::StatusCodes.get[route.request_method.downcase.to_sym]
-        default_code[:model] = @entity if @entity
+        default_code[:model] = entity if entity
         default_code[:message] = route.description || default_code[:message].sub('{item}', GrapeSwagger::DocMethods::PathString.item(route))
       end
 

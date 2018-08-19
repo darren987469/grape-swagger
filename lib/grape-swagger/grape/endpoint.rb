@@ -40,7 +40,7 @@ module Grape
       routes.each do |route|
         next if hidden?(route, options)
 
-        @item, path = GrapeSwagger::DocMethods::PathString.build(route, options)
+        path = GrapeSwagger::DocMethods::PathString.path(route, options)
         @entity = route.entity || route.options[:success]
 
         verb, method_object = method_object(route, options, path)
@@ -125,8 +125,7 @@ module Grape
 
         next build_file_response(memo[value[:code]]) if file_response?(value[:model])
 
-        response_model = @item
-        response_model = expose_params_from_model(value[:model]) if value[:model]
+        response_model = value[:model] ? expose_params_from_model(value[:model]) : GrapeSwagger::DocMethods::PathString.item(route)
 
         if memo.key?(200) && route.request_method == 'DELETE' && value[:model].nil?
           memo[204] = memo.delete(200)
@@ -159,13 +158,13 @@ module Grape
       if @entity.is_a?(Hash)
         default_code[:code] = @entity[:code] if @entity[:code].present?
         default_code[:model] = @entity[:model] if @entity[:model].present?
-        default_code[:message] = @entity[:message] || route.description || default_code[:message].sub('{item}', @item)
+        default_code[:message] = @entity[:message] || route.description || default_code[:message].sub('{item}', GrapeSwagger::DocMethods::PathString.item(route))
         default_code[:examples] = @entity[:examples] if @entity[:examples]
         default_code[:headers] = @entity[:headers] if @entity[:headers]
       else
         default_code = GrapeSwagger::DocMethods::StatusCodes.get[route.request_method.downcase.to_sym]
         default_code[:model] = @entity if @entity
-        default_code[:message] = route.description || default_code[:message].sub('{item}', @item)
+        default_code[:message] = route.description || default_code[:message].sub('{item}', GrapeSwagger::DocMethods::PathString.item(route))
       end
 
       [default_code]

@@ -4,18 +4,8 @@ module GrapeSwagger
   module DocMethods
     class PathString
       class << self
-        def build(route, options = {})
-          path = route.path.dup
-          # always removing format
-          path.sub!(/\(\.\w+?\)$/, '')
-          path.sub!('(.:format)', '')
-
-          # ... format path params
-          path.gsub!(/:(\w+)/, '{\1}')
-
-          # set item from path, this could be used for the definitions object
-          path_name = path.gsub(%r{/{(.+?)}}, '').split('/').last
-          item = path_name.present? ? path_name.singularize.underscore.camelize : 'Item'
+        def path(route, options = {})
+          path = format_path(route)
 
           if route.version && options[:add_version]
             version = GrapeSwagger::DocMethods::Version.get(route)
@@ -27,7 +17,28 @@ module GrapeSwagger
 
           path = "#{OptionalObject.build(:base_path, options)}#{path}" if options[:add_base_path]
 
-          [item, path.start_with?('/') ? path : "/#{path}"]
+          path.start_with?('/') ? path : "/#{path}"
+        end
+
+        # item from path, this could be used for the schema object
+        def item(route)
+          path = format_path(route)
+          path_name = path.gsub(%r{/{(.+?)}}, '').split('/').last
+          path_name.present? ? path_name.singularize.underscore.camelize : 'Item'
+        end
+
+        private
+
+        def format_path(route)
+          path = route.path.dup
+          # always removing format
+          path.sub!(/\(\.\w+?\)$/, '')
+          path.sub!('(.:format)', '')
+
+          # ... format path params
+          path.gsub!(/:(\w+)/, '{\1}')
+
+          path
         end
       end
     end

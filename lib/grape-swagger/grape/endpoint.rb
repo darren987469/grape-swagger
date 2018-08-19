@@ -5,25 +5,6 @@ require 'active_support/core_ext/string/inflections.rb'
 
 module Grape
   class Endpoint
-    # swagger spec3.0.1 related parts
-    #
-    # required keys for SwaggerObject
-    def swagger_object(_target_class, request, options)
-      object = {
-        openapi:             '3.0.1',
-        info:                info_object(options[:info].merge(version: options[:doc_version])),
-        authorizations:      options[:authorizations],
-        securityDefinitions: options[:security_definitions],
-        security:            options[:security],
-        host:                GrapeSwagger::DocMethods::OptionalObject.build(:host, options, request),
-        basePath:            GrapeSwagger::DocMethods::OptionalObject.build(:base_path, options, request),
-        schemes:             options[:schemes].is_a?(String) ? [options[:schemes]] : options[:schemes]
-      }
-
-      GrapeSwagger::DocMethods::Extensions.add_extensions_to_root(options, object)
-      object.delete_if { |_, value| value.blank? }
-    end
-
     def path_and_component_objects(namespace_routes, options)
       @paths = {}
       @components = {
@@ -52,36 +33,6 @@ module Grape
       return if models.nil?
 
       models.each { |x| expose_params_from_model(x) }
-    end
-
-    def info_object(infos)
-      result = {
-        title:          infos[:title] || 'API title',
-        description:    infos[:description],
-        termsOfService: infos[:terms_of_service_url],
-        contact:        contact_object(infos),
-        license:        license_object(infos),
-        version:        infos[:version]
-      }
-
-      GrapeSwagger::DocMethods::Extensions.add_extensions_to_info(infos, result)
-
-      result.delete_if { |_, value| value.blank? }
-    end
-
-    def license_object(infos)
-      {
-        name: infos[:license],
-        url:  infos[:license_url]
-      }.delete_if { |_, value| value.blank? }
-    end
-
-    def contact_object(infos)
-      {
-        name: infos[:contact_name],
-        email: infos[:contact_email],
-        url: infos[:contact_url]
-      }.delete_if { |_, value| value.blank? }
     end
 
     # path object

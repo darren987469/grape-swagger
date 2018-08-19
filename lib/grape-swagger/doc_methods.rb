@@ -12,6 +12,7 @@ require 'grape-swagger/doc_methods/move_params'
 require 'grape-swagger/doc_methods/headers'
 require 'grape-swagger/doc_methods/build_model_schema'
 require 'grape-swagger/doc_methods/version'
+require 'grape-swagger/doc_methods/base'
 
 module GrapeSwagger
   module DocMethods
@@ -43,11 +44,8 @@ module GrapeSwagger
       instance_eval(guard) unless guard.nil?
 
       output_path_components = proc do |combi_routes, endpoint|
-        output = endpoint.swagger_object(
-          target_class,
-          endpoint.request,
-          options
-        )
+        openapi = GrapeSwagger::DocMethods::Base.new(target_class, endpoint.request, options)
+        output = openapi.swagger_object
 
         paths, components = endpoint.path_and_component_objects(combi_routes, options)
         tags                 = tags_from(paths, options)

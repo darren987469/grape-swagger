@@ -5,48 +5,6 @@ require 'spec_helper'
 describe Grape::Endpoint do
   let(:endpoint) { described_class.new(Grape::Util::InheritableSetting.new, path: '/', method: :get) }
 
-  context 'info object' do
-    let(:infos) do
-      {
-        title: 'title',
-        description: 'description',
-        terms_of_service_url: 'terms_of_service_url',
-        version: 'version',
-        license: 'license',
-        license_url: 'license_url',
-        contact_name: 'contact_name',
-        contact_email: 'contact_email',
-        contact_url: 'contact_url'
-      }
-    end
-
-    describe '#info_object' do
-      subject { endpoint.send(:info_object, infos) }
-
-      it { expect(subject[:title]).to eq infos[:title] }
-      it { expect(subject[:description]).to eq infos[:description] }
-      it { expect(subject[:termsOfService]).to eq infos[:terms_of_service_url] }
-      it { expect(subject[:contact]).to eq endpoint.send(:contact_object, infos) }
-      it { expect(subject[:license]).to eq endpoint.send(:license_object, infos) }
-      it { expect(subject[:version]).to eq infos[:version] }
-    end
-
-    describe '#license_object' do
-      subject { endpoint.send(:license_object, infos) }
-
-      it { expect(subject[:name]).to eq infos[:license] }
-      it { expect(subject[:url]).to eq infos[:license_url] }
-    end
-
-    describe '#contact_object' do
-      subject { endpoint.send(:contact_object, infos) }
-
-      it { expect(subject[:name]).to eq infos[:contact_name] }
-      it { expect(subject[:email]).to eq infos[:contact_email] }
-      it { expect(subject[:url]).to eq infos[:contact_url] }
-    end
-  end
-
   describe '#param_type_is_array?' do
     subject { described_class.new(Grape::Util::InheritableSetting.new, path: '/', method: :get) }
 

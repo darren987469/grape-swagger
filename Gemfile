@@ -18,6 +18,7 @@ gem ENV['MODEL_PARSER'] if ENV.key?('MODEL_PARSER')
 group :development, :test do
   gem 'bundler'
   gem 'grape-entity'
+  gem 'grape-swagger-entity'
   gem 'pry', platforms: [:mri]
   gem 'pry-byebug', platforms: [:mri]
   gem 'rack'
@@ -27,7 +28,6 @@ group :development, :test do
   gem 'rdoc'
   gem 'rspec', '~> 3.0'
   gem 'rubocop', '~> 0.58', require: false
-  gem 'grape-swagger-entity'
 end
 
 group :test do

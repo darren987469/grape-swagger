@@ -8,7 +8,7 @@ module Grape
     # swagger spec3.0.1 related parts
     #
     # required keys for SwaggerObject
-    def swagger_object(target_class, request, options)
+    def swagger_object(_target_class, request, options)
       object = {
         openapi:             '3.0.1',
         info:                info_object(options[:info].merge(version: options[:doc_version])),
@@ -104,7 +104,7 @@ module Grape
       end
     end
 
-    def method_object(route, options, path)
+    def method_object(route, _options, path)
       method = {}
       method[:summary]     = summary_object(route)
       method[:description] = description_object(route)
@@ -182,8 +182,8 @@ module Grape
           value[:code] = 204
         end
 
-        next if value[:code] == 204
-        next unless !response_model.start_with?('Swagger_doc') && (@components[:schemas][response_model] || value[:model])
+        next if value[:code] == 204 || response_model.start_with?('Swagger_doc')
+        next unless @components[:schemas][response_model] || value[:model]
 
         memo[value[:code]][:schema] = build_reference(route, value, response_model)
         memo[value[:code]][:examples] = value[:examples] if value[:examples]
@@ -253,8 +253,8 @@ module Grape
       default_type(required)
 
       request_params = unless declared_params.nil? && route.headers.nil?
-                        parse_request_params(required)
-                      end || {}
+                         parse_request_params(required)
+                       end || {}
 
       request_params.empty? ? required : request_params
     end

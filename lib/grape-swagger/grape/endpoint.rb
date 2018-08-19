@@ -185,8 +185,6 @@ module Grape
         next if value[:code] == 204
         next unless !response_model.start_with?('Swagger_doc') && (@components[:schemas][response_model] || value[:model])
 
-        @components[:schemas][response_model][:description] = description_object(route)
-
         memo[value[:code]][:schema] = build_reference(route, value, response_model)
         memo[value[:code]][:examples] = value[:examples] if value[:examples]
       end

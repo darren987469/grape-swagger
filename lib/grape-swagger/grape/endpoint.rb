@@ -133,8 +133,12 @@ module Grape
         next if value[:code] == 204 || response_model.start_with?('Swagger_doc')
         next unless @components[:schemas][response_model] || value[:model]
 
-        memo[value[:code]][:schema] = build_reference(route, value, response_model)
-        memo[value[:code]][:examples] = value[:examples] if value[:examples]
+        memo[value[:code]][:content] = {}
+        support_content_types.each do |content_type|
+          memo[value[:code]][:content][content_type] = {}
+          memo[value[:code]][:content][content_type][:schema] = build_reference(route, value, response_model)
+          memo[value[:code]][:content][content_type][:examples] = value[:examples] if value[:examples]
+        end
       end
     end
 
@@ -168,6 +172,10 @@ module Grape
       end
 
       [default_code]
+    end
+
+    def support_content_types
+      options[:for].content_types.values
     end
 
     def tag_object(route, path)

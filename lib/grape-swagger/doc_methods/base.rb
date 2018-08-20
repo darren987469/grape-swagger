@@ -5,6 +5,9 @@ module GrapeSwagger
     class Base
       attr_reader :target_class, :request, :options
 
+      # @param target_class [Class] API Class (which extend Grape::API)
+      # @param request [Hash] Request of endpoint of API
+      # @param options [Hash] Options of add_swagger_documentation
       def initialize(target_class, request, options)
         @target_class = target_class
         @request = request

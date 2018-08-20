@@ -19,7 +19,16 @@ RSpec.shared_context 'pet store api' do
       resources :pets do
         desc 'List all pets',
              is_array: true,
-             success: { message: 'A paged array of pets', model: Entities::Pet }
+             success: {
+               message: 'A paged array of pets',
+               model: Entities::Pet,
+               headers: {
+                'x-next' => {
+                  description: 'A link to the next page of responses',
+                  schema: { type: 'string' }
+                }
+               }
+             }
         params do
           optional :limit, type: Integer, desc: 'How many items to return at one time (max 100)'
         end
@@ -101,7 +110,8 @@ RSpec.shared_context 'pet store api' do
                 'content' => {
                   'application/json' => {
                     'schema' => {
-                      '$ref' => '#/components/schemas/Pets'
+                      'type' => 'array',
+                      'items' => { '$ref' => '#/components/schemas/Pet' }
                     }
                   }
                 }

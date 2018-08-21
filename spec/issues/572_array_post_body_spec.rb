@@ -36,15 +36,15 @@ describe '#572 is_array is applied to all possible responses' do
   specify { expect(responses.keys.sort).to eq codes }
 
   specify do
-    expect(responses['200']['schema']).to include 'type'
-    expect(responses['200']['schema']['type']).to eql 'array'
+    expect(responses['200']['content']['application/json']['schema']).to include 'type'
+    expect(responses['200']['content']['application/json']['schema']['type']).to eql 'array'
   end
 
   describe 'no array types' do
     specify do
       codes[1..-1].each do |code|
-        expect(responses[code]['schema']).not_to include 'type'
-        expect(responses[code]['schema'].keys).to eql ['$ref']
+        expect(responses[code]['content']['application/json']['schema']).not_to include 'type'
+        expect(responses[code]['content']['application/json']['schema'].keys).to eql ['$ref']
       end
     end
   end

@@ -91,8 +91,25 @@ describe 'response with headers' do
       expect(subject['paths']['/response_headers']['get']).to eql(
         'description' => 'This returns headers',
         'responses' => {
-          '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'headers' => header_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_404, 'headers' => header_404 }
+          '200' => {
+            'description' => 'This returns headers',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/UseResponse' }
+              }
+            },
+            'headers' => header_200
+          },
+          '404' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            },
+            'examples' => examples_404,
+            'headers' => header_404
+          }
         },
         'tags' => ['response_headers'],
         'operationId' => 'getResponseHeaders'
@@ -121,7 +138,16 @@ describe 'response with headers' do
         'description' => 'A 204 can have headers too',
         'responses' => {
           '204' => { 'description' => 'No content', 'headers' => header_204 },
-          '400' => { 'description' => 'Bad Request', 'headers' => header_400, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_400 }
+          '400' => {
+            'description' => 'Bad Request',
+            'headers' => header_400,
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            },
+            'examples' => examples_400
+          }
         },
         'tags' => ['no_content_response_headers'],
         'operationId' => 'deleteNoContentResponseHeaders'
@@ -149,8 +175,25 @@ describe 'response with headers' do
       expect(subject['paths']['/file_response_headers']['get']).to eql(
         'description' => 'A file can have headers too',
         'responses' => {
-          '200' => { 'description' => 'A file can have headers too', 'headers' => header_200, 'schema' => { 'type' => 'file' } },
-          '404' => { 'description' => 'NotFound', 'headers' => header_404, 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'examples' => examples_404 }
+          '200' => {
+            'description' => 'A file can have headers too',
+            'headers' => header_200,
+            'content' => {
+              'application/json' => {
+                'schema' => { 'type' => 'file' }
+              }
+            }
+          },
+          '404' => {
+            'description' => 'NotFound',
+            'headers' => header_404,
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            },
+            'examples' => examples_404
+          }
         },
         'tags' => ['file_response_headers'],
         'operationId' => 'getFileResponseHeaders'
@@ -178,9 +221,33 @@ describe 'response with headers' do
       expect(subject['paths']['/response_failure_headers']['get']).to eql(
         'description' => 'This syntax also returns headers',
         'responses' => {
-          '200' => { 'description' => 'This syntax also returns headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' }, 'headers' => header_200 },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'headers' => header_404 },
-          '400' => { 'description' => 'BadRequest', 'schema' => { '$ref' => '#/components/schemas/ApiError' }, 'headers' => header_400 }
+          '200' => {
+            'description' => 'This syntax also returns headers',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/UseResponse' }
+              }
+            },
+            'headers' => header_200
+          },
+          '404' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            },
+            'headers' => header_404
+          },
+          '400' => {
+            'description' => 'BadRequest',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            },
+            'headers' => header_400
+          }
         },
         'tags' => ['response_failure_headers'],
         'operationId' => 'getResponseFailureHeaders'
@@ -198,8 +265,22 @@ describe 'response with headers' do
       expect(subject['paths']['/response_no_headers']['get']).to eql(
         'description' => 'This does not return headers',
         'responses' => {
-          '200' => { 'description' => 'This does not return headers', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
-          '404' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
+          '200' => {
+            'description' => 'This does not return headers',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/UseResponse' }
+              }
+            }
+          },
+          '404' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            }
+          }
         },
         'tags' => ['response_no_headers'],
         'operationId' => 'getResponseNoHeaders'

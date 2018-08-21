@@ -39,7 +39,7 @@ RSpec.shared_context 'pet store api' do
         desc 'Create a pet',
              success: { message: 'Null response' }
         post do
-          status 201
+          @body = nil
         end
 
         desc 'Info for a specific pet',

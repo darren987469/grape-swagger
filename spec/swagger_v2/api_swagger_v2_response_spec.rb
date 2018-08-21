@@ -49,8 +49,22 @@ describe 'response' do
       expect(subject['paths']['/nested_type']['get']).to eql(
         'description' => 'This returns something',
         'responses' => {
-          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseItemResponseAsType' } },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
+          '200' => {
+            'description' => 'This returns something',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/UseItemResponseAsType' }
+              }
+            }
+          },
+          '400' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            }
+          }
         },
         'tags' => ['nested_type'],
         'operationId' => 'getNestedType'
@@ -69,8 +83,22 @@ describe 'response' do
       expect(subject['paths']['/entity_response']['get']).to eql(
         'description' => 'This returns something',
         'responses' => {
-          '200' => { 'description' => 'This returns something', 'schema' => { '$ref' => '#/components/schemas/UseResponse' } },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
+          '200' => {
+            'description' => 'This returns something',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/UseResponse' }
+              }
+            }
+          },
+          '400' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            }
+          }
         },
         'tags' => ['entity_response'],
         'operationId' => 'getEntityResponse'
@@ -94,7 +122,14 @@ describe 'response' do
         ],
         'responses' => {
           '201' => { 'description' => 'This returns something' },
-          '400' => { 'description' => 'NotFound', 'schema' => { '$ref' => '#/components/schemas/ApiError' } }
+          '400' => {
+            'description' => 'NotFound',
+            'content' => {
+              'application/json' => {
+                'schema' => { '$ref' => '#/components/schemas/ApiError' }
+              }
+            }
+          }
         },
         'tags' => ['params_given'],
         'operationId' => 'postParamsGiven'

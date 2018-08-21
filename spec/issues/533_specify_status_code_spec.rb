@@ -65,7 +65,7 @@ describe '#533 specify status codes' do
   let(:patch_response_documentation) { subject['patch']['responses'] }
   specify do
     expect(patch_response_documentation.keys.first).to eql '204'
-    expect(patch_response_documentation['204']['content']['application/json']).not_to include 'schema'
+    expect(patch_response_documentation['204']).not_to include 'content'
   end
 
   let(:delete_response) { delete '/issue_533' }
@@ -73,6 +73,6 @@ describe '#533 specify status codes' do
   let(:delete_response_documentation) { subject['delete']['responses'] }
   specify do
     expect(delete_response_documentation.keys.first).to eql '203'
-    expect(delete_response_documentation['203']['content']['application/json']).not_to include 'schema'
+    expect(delete_response_documentation['203']).not_to include 'schema'
   end
 end

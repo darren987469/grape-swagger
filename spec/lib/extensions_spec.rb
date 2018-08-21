@@ -25,7 +25,7 @@ describe GrapeSwagger::DocMethods::Extensions do
 
       describe 'ref given' do
         let(:path) do
-          { get: { responses: { 200 => { schema: { '$ref' => "#/components/schemas/#{model}" } } } } }
+          { get: { responses: { 200 => { content: { 'application/json' => { schema: { '$ref' => "#/components/schemas/#{model}" } } } } } } }
         end
         specify do
           schema = subject.send(:find_schema, status, path)
@@ -35,7 +35,7 @@ describe GrapeSwagger::DocMethods::Extensions do
 
       describe 'items given' do
         let(:path) do
-          { get: { responses: { 200 => { schema: { 'items' => { '$ref' => "#/components/schemas/#{model}" } } } } } }
+          { get: { responses: { 200 => { content: { 'application/json' => { schema: { 'items' => { '$ref' => "#/components/schemas/#{model}" } } } } } } } }
         end
         specify do
           schema = subject.send(:find_schema, status, path)

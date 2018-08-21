@@ -56,8 +56,10 @@ module GrapeSwagger
           response = path[method][:responses][status]
           return if response.nil?
 
-          return response[:schema]['$ref'].split('/').last if response[:schema].key?('$ref')
-          return response[:schema]['items']['$ref'].split('/').last if response[:schema].key?('items')
+          content_type = response[:content].keys.first
+          schema = response[:content][content_type][:schema]
+          return schema['$ref'].split('/').last if schema.key?('$ref')
+          return schema['items']['$ref'].split('/').last if schema.key?('items')
         end
 
         def add_extension_to(part, extensions)

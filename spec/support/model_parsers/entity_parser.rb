@@ -213,10 +213,11 @@ RSpec.shared_context 'entity swagger example' do
                 'description' => 'nested route inside namespace',
                 'content' => {
                   'application/json' => {
-                    'schema' => { '$ref' => '#/components/schemas/QueryInput' } }
+                    'schema' => { '$ref' => '#/components/schemas/QueryInput' }
                   }
                 }
-              },
+              }
+            },
             'tags' => ['other_thing'],
             'operationId' => 'getV3OtherThingElements',
             'x-amazon-apigateway-auth' => { 'type' => 'none' },

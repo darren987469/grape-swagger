@@ -89,7 +89,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/response_headers']['get']).to eql(
-        'description' => 'This returns headers',
+        'summary' => 'This returns headers',
         'responses' => {
           '200' => {
             'description' => 'This returns headers',
@@ -135,7 +135,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/no_content_response_headers']['delete']).to eql(
-        'description' => 'A 204 can have headers too',
+        'summary' => 'A 204 can have headers too',
         'responses' => {
           '204' => { 'description' => 'No content', 'headers' => header_204 },
           '400' => {
@@ -173,7 +173,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/file_response_headers']['get']).to eql(
-        'description' => 'A file can have headers too',
+        'summary' => 'A file can have headers too',
         'responses' => {
           '200' => {
             'description' => 'A file can have headers too',
@@ -219,7 +219,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/response_failure_headers']['get']).to eql(
-        'description' => 'This syntax also returns headers',
+        'summary' => 'This syntax also returns headers',
         'responses' => {
           '200' => {
             'description' => 'This syntax also returns headers',
@@ -263,7 +263,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/response_no_headers']['get']).to eql(
-        'description' => 'This does not return headers',
+        'summary' => 'This does not return headers',
         'responses' => {
           '200' => {
             'description' => 'This does not return headers',

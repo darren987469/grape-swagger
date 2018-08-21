@@ -82,7 +82,7 @@ describe 'a guarded api endpoint' do
         'paths' => {
           '/auth' => {
             'get' => {
-              'description' => 'Show endpoint if authenticated',
+              'summary' => 'Show endpoint if authenticated',
               'tags' => ['auth'],
               'operationId' => 'getAuth',
               'responses' => { '200' => { 'description' => 'Show endpoint if authenticated' } }

@@ -38,7 +38,7 @@ describe 'docs mounted separately from api' do
       'paths' => {
         '/simple' => {
           'get' => {
-            'description' => 'This gets something.',
+            'summary' => 'This gets something.',
             'responses' => { '200' => { 'description' => 'This gets something.' } },
             'tags' => ['simple'],
             'operationId' => 'getSimple'
@@ -58,7 +58,7 @@ describe 'docs mounted separately from api' do
       'paths' => {
         '/simple' => {
           'get' => {
-            'description' => 'This gets something.',
+            'summary' => 'This gets something.',
             'responses' => {
               '200' => { 'description' => 'This gets something.' }
             },

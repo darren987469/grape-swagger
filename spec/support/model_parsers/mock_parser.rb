@@ -193,7 +193,7 @@ RSpec.shared_context 'mock swagger example' do
       'paths' => {
         '/v3/other_thing/{elements}' => {
           'get' => {
-            'description' => 'nested route inside namespace',
+            'summary' => 'nested route inside namespace',
             'parameters' => [{ 'in' => 'body', 'name' => 'elements', 'description' => 'Set of configuration', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }],
             'responses' => {
               '200' => {
@@ -213,7 +213,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing' => {
           'get' => {
-            'description' => 'This gets Things.',
+            'summary' => 'This gets Things.',
             'parameters' => [
               { 'in' => 'query', 'name' => 'id', 'description' => 'Identity of Something', 'type' => 'integer', 'format' => 'int32', 'required' => false },
               { 'in' => 'query', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => false },
@@ -235,7 +235,7 @@ RSpec.shared_context 'mock swagger example' do
             'operationId' => 'getThing'
           },
           'post' => {
-            'description' => 'This creates Thing.',
+            'summary' => 'This creates Thing.',
             'parameters' => [
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => true },
               { 'in' => 'formData', 'name' => 'links', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }
@@ -256,14 +256,14 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing/{id}' => {
           'get' => {
-            'description' => 'This gets Thing.',
+            'summary' => 'This gets Thing.',
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '200' => { 'description' => 'getting a single thing' }, '401' => { 'description' => 'Unauthorized' } },
             'tags' => ['thing'],
             'operationId' => 'getThingId'
           },
           'put' => {
-            'description' => 'This updates Thing.',
+            'summary' => 'This updates Thing.',
             'parameters' => [
               { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
               { 'in' => 'formData', 'name' => 'text', 'description' => 'Content of something.', 'type' => 'string', 'required' => false },
@@ -283,7 +283,7 @@ RSpec.shared_context 'mock swagger example' do
             'operationId' => 'putThingId'
           },
           'delete' => {
-            'description' => 'This deletes Thing.',
+            'summary' => 'This deletes Thing.',
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => {
               '200' => {
@@ -301,7 +301,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing2' => {
           'get' => {
-            'description' => 'This gets Things.',
+            'summary' => 'This gets Things.',
             'responses' => {
               '200' => {
                 'description' => 'get Horses',
@@ -326,7 +326,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/dummy/{id}' => {
           'delete' => {
-            'description' => 'dummy route.',
+            'summary' => 'dummy route.',
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '204' => { 'description' => 'dummy route.' }, '401' => { 'description' => 'Unauthorized' } },
             'tags' => ['dummy'],

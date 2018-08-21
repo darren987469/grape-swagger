@@ -30,7 +30,7 @@ describe 'Default API' do
         'paths' => {
           '/something' => {
             'get' => {
-              'description' => 'This gets something.',
+              'summary' => 'This gets something.',
               'tags' => ['something'],
               'operationId' => 'getSomething',
               'responses' => { '200' => { 'description' => 'This gets something.' } }
@@ -74,7 +74,7 @@ describe 'Default API' do
                             'paths' => {
                               '/something' => {
                                 'get' => {
-                                  'description' => 'This gets something.',
+                                  'summary' => 'This gets something.',
                                   'tags' => ['something'],
                                   'operationId' => 'getSomething',
                                   'responses' => { '200' => { 'description' => 'This gets something.' } }

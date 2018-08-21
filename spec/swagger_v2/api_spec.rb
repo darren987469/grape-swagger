@@ -49,7 +49,7 @@ describe 'body parameter definitions' do
         params do
           requires :petId, type: String, desc: 'The id of the pet to retrieve'
         end
-        get ':id' do
+        get ':petId' do
           present OpenStruct.new(id: 1, name: 'dog', tag: 'good dog'), with: Entities::Pet
         end
       end
@@ -153,10 +153,10 @@ describe 'body parameter definitions' do
             }
           }
         },
-        '/pets/{id}' => {
+        '/pets/{petId}' => {
           'get' => {
             'summary' => 'Info for a specific pet',
-            'operationId' => 'getPetsId',
+            'operationId' => 'getPetsPetid',
             'tags' => ['pets'],
             'parameters' => [{
               'name' => 'petId',
@@ -173,7 +173,7 @@ describe 'body parameter definitions' do
                 'content' => {
                   'application/json' => {
                     'schema' => {
-                      '$ref' => '#/components/schemas/Pets'
+                      '$ref' => '#/components/schemas/Pet'
                     }
                   }
                 }
@@ -246,5 +246,5 @@ describe 'body parameter definitions' do
 
   it { expect(subject['paths']['/pets']['get']).to eq expected['paths']['/pets']['get'] }
   it { expect(subject['paths']['/pets']['post']).to eq expected['paths']['/pets']['post'] }
-  it { expect(subject['paths']['/pets/{id}']['get']).to eq expected['paths']['/pets/{id}']['get'] }
+  it { expect(subject['paths']['/pets/{petId}']['get']).to eq expected['paths']['/pets/{petId}']['get'] }
 end

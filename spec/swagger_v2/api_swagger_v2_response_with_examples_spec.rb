@@ -70,7 +70,7 @@ describe 'response with examples' do
 
     specify do
       expect(subject['paths']['/response_examples']['get']).to eql(
-        'description' => 'This returns examples',
+        'summary' => 'This returns examples',
         'responses' => {
           '200' => {
             'description' => 'This returns examples',
@@ -115,7 +115,7 @@ describe 'response with examples' do
 
     specify do
       expect(subject['paths']['/response_failure_examples']['get']).to eql(
-        'description' => 'This syntax also returns examples',
+        'summary' => 'This syntax also returns examples',
         'responses' => {
           '200' => {
             'description' => 'This syntax also returns examples',
@@ -156,7 +156,7 @@ describe 'response with examples' do
 
     specify do
       expect(subject['paths']['/response_no_examples']['get']).to eql(
-        'description' => 'This does not return examples',
+        'summary' => 'This does not return examples',
         'responses' => {
           '200' => {
             'description' => 'This does not return examples',

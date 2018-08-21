@@ -51,7 +51,7 @@ describe 'a hide mounted api' do
       'paths' => {
         '/simple' => {
           'get' => {
-            'description' => 'Show this endpoint',
+            'summary' => 'Show this endpoint',
             'tags' => ['simple'],
             'operationId' => 'getSimple',
             'responses' => { '200' => { 'description' => 'Show this endpoint' } }
@@ -59,7 +59,7 @@ describe 'a hide mounted api' do
         },
         '/lazy' => {
           'get' => {
-            'description' => 'Lazily show endpoint',
+            'summary' => 'Lazily show endpoint',
             'tags' => ['lazy'],
             'operationId' => 'getLazy',
             'responses' => { '200' => { 'description' => 'Lazily show endpoint' } }
@@ -109,7 +109,7 @@ describe 'a hide mounted api with same namespace' do
       'paths' => {
         '/simple/show' => {
           'get' => {
-            'description' => 'Show this endpoint',
+            'summary' => 'Show this endpoint',
             'operationId' => 'getSimpleShow',
             'tags' => ['simple'], 'responses' => { '200' => { 'description' => 'Show this endpoint' } }
           }
@@ -128,7 +128,7 @@ describe 'a hide mounted api with same namespace' do
       'paths' => {
         '/simple/show' => {
           'get' => {
-            'description' => 'Show this endpoint',
+            'summary' => 'Show this endpoint',
             'tags' => ['simple'],
             'operationId' => 'getSimpleShow',
             'responses' => { '200' => { 'description' => 'Show this endpoint' } }

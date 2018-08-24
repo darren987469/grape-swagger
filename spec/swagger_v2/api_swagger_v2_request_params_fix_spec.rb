@@ -48,8 +48,8 @@ describe 'additional parameter settings' do
   specify do
     expect(subject['paths']['/bookings/{id}']['put']['parameters'].sort_by { |p| p['name'] }).to eql(
       [
-        { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
-        { 'in' => 'formData', 'name' => 'name', 'type' => 'string', 'required' => false }
+        { 'in' => 'path', 'name' => 'id', 'schema' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true },
+        { 'in' => 'formData', 'name' => 'name', 'schema' => { 'type' => 'string' }, 'required' => false }
       ]
     )
   end
@@ -57,7 +57,7 @@ describe 'additional parameter settings' do
   specify do
     expect(subject['paths']['/bookings/{id}']['get']['parameters']).to eql(
       [
-        { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }
+        { 'in' => 'path', 'name' => 'id', 'schema' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true }
       ]
     )
   end
@@ -65,7 +65,7 @@ describe 'additional parameter settings' do
   specify do
     expect(subject['paths']['/bookings/{id}']['delete']['parameters']).to eql(
       [
-        { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }
+        { 'in' => 'path', 'name' => 'id', 'schema' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true }
       ]
     )
   end

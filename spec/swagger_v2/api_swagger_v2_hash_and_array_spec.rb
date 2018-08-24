@@ -41,6 +41,7 @@ describe 'document hash and array' do
 
   subject do
     get '/swagger_doc'
+    binding.pry
     JSON.parse(last_response.body)['components']['schemas']
   end
   describe 'generated request definition' do

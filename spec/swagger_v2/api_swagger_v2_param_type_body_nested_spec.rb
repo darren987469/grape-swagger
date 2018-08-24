@@ -154,7 +154,7 @@ describe 'moving body/formData Params to components/schemas' do
       specify do
         expect(subject['paths']['/simple_nested_params/in_body/{id}']['put']['parameters']).to eql(
           [
-            { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
+            { 'in' => 'path', 'name' => 'id', 'schema' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true },
             { 'name' => 'SimpleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putSimpleNestedParamsInBody' } }
           ]
         )
@@ -244,7 +244,7 @@ describe 'moving body/formData Params to components/schemas' do
       specify do
         expect(subject['paths']['/multiple_nested_params/in_body/{id}']['put']['parameters']).to eql(
           [
-            { 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true },
+            { 'in' => 'path', 'name' => 'id', 'schema' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true },
             { 'name' => 'MultipleNestedParamsInBody', 'in' => 'body', 'required' => true, 'schema' => { '$ref' => '#/components/schemas/putMultipleNestedParamsInBody' } }
           ]
         )

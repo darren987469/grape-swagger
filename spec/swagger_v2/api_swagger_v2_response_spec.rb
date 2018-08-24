@@ -117,8 +117,8 @@ describe 'response' do
       expect(subject['paths']['/params_given']['post']).to eql(
         'summary' => 'This returns something',
         'parameters' => [
-          { 'in' => 'formData', 'name' => 'description', 'type' => 'string', 'required' => false },
-          { 'in' => 'formData', 'name' => '$responses', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => false }
+          { 'in' => 'formData', 'name' => 'description', 'schema' => { 'type' => 'string' }, 'required' => false },
+          { 'in' => 'formData', 'name' => '$responses', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } }, 'required' => false }
         ],
         'responses' => {
           '201' => { 'description' => 'This returns something' },

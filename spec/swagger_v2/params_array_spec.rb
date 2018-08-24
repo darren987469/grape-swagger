@@ -82,8 +82,8 @@ describe 'Group Params as Array' do
     specify do
       expect(subject['paths']['/groups']['post']['parameters']).to eql(
         [
-          { 'in' => 'formData', 'name' => 'required_group[required_param_1]', 'required' => true, 'type' => 'array', 'items' => { 'type' => 'string' } },
-          { 'in' => 'formData', 'name' => 'required_group[required_param_2]', 'required' => true, 'type' => 'array', 'items' => { 'type' => 'string' } }
+          { 'in' => 'formData', 'name' => 'required_group[required_param_1]', 'required' => true, 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } } },
+          { 'in' => 'formData', 'name' => 'required_group[required_param_2]', 'required' => true, 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } } }
         ]
       )
     end
@@ -98,10 +98,10 @@ describe 'Group Params as Array' do
     specify do
       expect(subject['paths']['/type_given']['post']['parameters']).to eql(
         [
-          { 'in' => 'formData', 'name' => 'typed_group[id]', 'description' => 'integer given', 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true },
-          { 'in' => 'formData', 'name' => 'typed_group[name]', 'description' => 'string given', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true },
-          { 'in' => 'formData', 'name' => 'typed_group[email]', 'description' => 'email given', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => false },
-          { 'in' => 'formData', 'name' => 'typed_group[others]', 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'enum' => [1, 2, 3] }, 'required' => false }
+          { 'in' => 'formData', 'name' => 'typed_group[id]', 'description' => 'integer given', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32' } }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'typed_group[name]', 'description' => 'string given', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'typed_group[email]', 'description' => 'email given', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } }, 'required' => false },
+          { 'in' => 'formData', 'name' => 'typed_group[others]', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'enum' => [1, 2, 3] } }, 'required' => false }
         ]
       )
     end
@@ -119,10 +119,14 @@ describe 'Group Params as Array' do
         'type' => 'object',
         'properties' => {
           'array_of_string' => {
-            'type' => 'string', 'description' => 'nested array of strings'
+            'type' => 'array',
+            'items' => { 'type' => 'string' },
+            'description' => 'nested array of strings'
           },
           'array_of_integer' => {
-            'type' => 'integer', 'format' => 'int32', 'description' => 'nested array of integers'
+            'type' => 'array',
+            'items' => { 'type' => 'integer', 'format' => 'int32' },
+            'description' => 'nested array of integers'
           }
         },
         'required' => %w[array_of_string array_of_integer]
@@ -162,8 +166,8 @@ describe 'Group Params as Array' do
     specify do
       expect(subject['paths']['/array_of_type_in_form']['post']['parameters']).to eql(
         [
-          { 'in' => 'formData', 'name' => 'array_of_string', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true },
-          { 'in' => 'formData', 'name' => 'array_of_integer', 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32' }, 'required' => true }
+          { 'in' => 'formData', 'name' => 'array_of_string', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string' } }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'array_of_integer', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32' } }, 'required' => true }
         ]
       )
     end
@@ -175,9 +179,11 @@ describe 'Group Params as Array' do
         {
           'in' => 'formData',
           'name' => 'array_of_entities',
-          'type' => 'array',
-          'items' => {
-            '$ref' => '#/components/schemas/ApiError'
+          'schema' => {
+            'type' => 'array',
+            'items' => {
+              '$ref' => '#/components/schemas/ApiError'
+            }
           },
           'required' => true
         }

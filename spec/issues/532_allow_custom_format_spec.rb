@@ -30,8 +30,8 @@ describe '#532 allow custom format' do
   specify do
     expect(parameters).to eql(
       [
-        { 'in' => 'formData', 'name' => 'logs', 'type' => 'string', 'format' => 'log', 'required' => true },
-        { 'in' => 'formData', 'name' => 'phone_number', 'type' => 'integer', 'format' => 'phone_number', 'required' => false }
+        { 'in' => 'formData', 'name' => 'logs', 'schema' => { 'type' => 'string', 'format' => 'log' }, 'required' => true },
+        { 'in' => 'formData', 'name' => 'phone_number', 'schema' => { 'type' => 'integer', 'format' => 'phone_number' }, 'required' => false }
       ]
     )
   end

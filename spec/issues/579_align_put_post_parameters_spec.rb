@@ -101,7 +101,7 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(body_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
           {
             'name' => 'Issue579ImplicitBodyParameter', 'in' => 'body', 'required' => true, 'schema' => {
               '$ref' => '#/components/schemas/putIssue579ImplicitBodyParameter'
@@ -115,9 +115,9 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(form_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
-          { 'in' => 'formData', 'name' => 'name', 'type' => 'string', 'required' => false },
-          { 'in' => 'formData', 'name' => 'content', 'type' => 'string', 'required' => false }
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'name', 'schema' => { 'type' => 'string' }, 'required' => false },
+          { 'in' => 'formData', 'name' => 'content', 'schema' => { 'type' => 'string' }, 'required' => false }
         ]
       )
     end
@@ -128,7 +128,7 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(body_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
           {
             'name' => 'Issue579ExplicitBodyParameter', 'in' => 'body', 'required' => true, 'schema' => {
               '$ref' => '#/components/schemas/putIssue579ExplicitBodyParameter'
@@ -142,9 +142,9 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(form_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
-          { 'in' => 'formData', 'name' => 'name', 'type' => 'string', 'required' => false },
-          { 'in' => 'formData', 'name' => 'content', 'type' => 'string', 'required' => false }
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'name', 'schema' => { 'type' => 'string' }, 'required' => false },
+          { 'in' => 'formData', 'name' => 'content', 'schema' => { 'type' => 'string' }, 'required' => false }
         ]
       )
     end
@@ -155,7 +155,7 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(body_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
           {
             'name' => 'Issue579NamespaceParamGuidBodyParameter', 'in' => 'body', 'required' => true, 'schema' => {
               '$ref' => '#/components/schemas/putIssue579NamespaceParamGuidBodyParameter'
@@ -169,9 +169,9 @@ describe '#579 put / post parameters spec' do
     specify do
       expect(form_parameters).to eql(
         [
-          { 'in' => 'path', 'name' => 'guid', 'type' => 'string', 'format' => 'guid', 'required' => true },
-          { 'in' => 'formData', 'name' => 'name', 'type' => 'string', 'required' => false },
-          { 'in' => 'formData', 'name' => 'content', 'type' => 'string', 'required' => false }
+          { 'in' => 'path', 'name' => 'guid', 'schema' => { 'type' => 'string', 'format' => 'guid' }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'name', 'schema' => { 'type' => 'string' }, 'required' => false },
+          { 'in' => 'formData', 'name' => 'content', 'schema' => { 'type' => 'string' }, 'required' => false }
         ]
       )
     end

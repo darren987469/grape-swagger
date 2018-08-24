@@ -26,7 +26,7 @@ describe 'Boolean Params' do
 
   it 'converts boolean types' do
     expect(subject).to eq [
-      { 'in' => 'formData', 'name' => 'a_boolean', 'type' => 'boolean', 'required' => true }
+      { 'in' => 'formData', 'name' => 'a_boolean', 'schema' => { 'type' => 'boolean' }, 'required' => true }
     ]
   end
 end

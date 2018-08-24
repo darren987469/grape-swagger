@@ -40,12 +40,26 @@ describe 'Group Params as Hash' do
     end
 
     specify do
-      expect(subject['paths']['/use_groups']['post']).to include('parameters')
-      expect(subject['paths']['/use_groups']['post']['parameters']).to eql(
-        [
-          { 'in' => 'formData', 'name' => 'required_group[required_param_1]', 'type' => 'string', 'required' => true },
-          { 'in' => 'formData', 'name' => 'required_group[required_param_2]', 'type' => 'string', 'required' => true }
-        ]
+      expect(subject['paths']['/use_groups']['post']).to include('requestBody')
+      expect(subject['paths']['/use_groups']['post']['requestBody']).to eql(
+        'content' => {
+          'application/json' => {
+            'schema' => {
+              'type' => 'object',
+              'required' => ['required_group'],
+              'properties' => {
+                'required_group' => {
+                  'type' => 'object',
+                  'required' => %w[required_param_1 required_param_2],
+                  'properties' => {
+                    'required_param_1' => { 'type' => 'string' },
+                    'required_param_2' => { 'type' => 'string' }
+                  }
+                }
+              }
+            }
+          }
+        }
       )
     end
   end
@@ -57,14 +71,28 @@ describe 'Group Params as Hash' do
     end
 
     specify do
-      expect(subject['paths']['/use_given_type']['post']).to include('parameters')
-      expect(subject['paths']['/use_given_type']['post']['parameters']).to eql(
-        [
-          { 'in' => 'formData', 'name' => 'typed_group[id]', 'description' => 'integer given', 'type' => 'integer', 'required' => true, 'format' => 'int32' },
-          { 'in' => 'formData', 'name' => 'typed_group[name]', 'description' => 'string given', 'type' => 'string', 'required' => true },
-          { 'in' => 'formData', 'name' => 'typed_group[email]', 'description' => 'email given', 'type' => 'string', 'required' => false },
-          { 'in' => 'formData', 'name' => 'typed_group[others]', 'type' => 'integer', 'required' => false, 'format' => 'int32', 'enum' => [1, 2, 3] }
-        ]
+      expect(subject['paths']['/use_given_type']['post']).to include('requestBody')
+      expect(subject['paths']['/use_given_type']['post']['requestBody']).to eql(
+        'content' => {
+          'application/json' => {
+            'schema' => {
+              'type' => 'object',
+              'required' => ['typed_group'],
+              'properties' => {
+                'typed_group' => {
+                  'type' => 'object',
+                  'required' => %w[id name],
+                  'properties' => {
+                    'id' => { 'type' => 'integer', 'description' => 'integer given' },
+                    'name' => { 'type' => 'string', 'description' => 'string given' },
+                    'email' => { 'type' => 'string', 'description' => 'email given' },
+                    'others' => { 'type' => 'integer', enum: [1,2,3] }
+                  }
+                }
+              }
+            }
+          }
+        }
       )
     end
   end

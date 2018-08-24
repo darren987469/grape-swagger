@@ -34,13 +34,13 @@ describe 'Params Multi Types' do
       {
         'in' => 'formData',
         'name' => 'input',
-        'type' => 'string',
+        'schema' => { 'type' => 'string' },
         'required' => true
       },
       {
         'in' => 'formData',
         'name' => 'another_input',
-        'type' => 'string',
+        'schema' => { 'type' => 'string' },
         'required' => true
       }
     ]

@@ -15,8 +15,12 @@ module GrapeSwagger
           # required properties
           @parsed_param = {
             in:   param_type(value_type),
-            name: settings[:full_name] || param
+            name: settings[:full_name] || param,
+            schema: {}
           }
+
+          # FIXME: extract logic outside
+          return nil if %w[formData body].include? @parsed_param[:in]
 
           # optional properties
           document_description(settings)
@@ -54,11 +58,11 @@ module GrapeSwagger
         def document_type_and_format(settings, data_type)
           if DataType.primitive?(data_type)
             data = DataType.mapping(data_type)
-            @parsed_param[:type], @parsed_param[:format] = data
+            @parsed_param[:schema][:type], @parsed_param[:schema][:format] = data
           else
-            @parsed_param[:type] = data_type
+            @parsed_param[:schema][:type] = data_type
           end
-          @parsed_param[:format] = settings[:format] if settings[:format].present?
+          @parsed_param[:schema][:format] = settings[:format] if settings[:format].present?
         end
 
         def document_array_param(value_type, components)
@@ -73,11 +77,11 @@ module GrapeSwagger
 
           array_items = {}
           if components[:schemas][value_type[:data_type]]
-            array_items['$ref'] = "#/components/schemas/#{@parsed_param[:type]}"
+            array_items['$ref'] = "#/components/schemas/#{@parsed_param[:schema][:type]}"
           else
-            array_items[:type] = type || @parsed_param[:type] == 'array' ? 'string' : @parsed_param[:type]
+            array_items[:type] = type || @parsed_param[:schema][:type] == 'array' ? 'string' : @parsed_param[:schema][:type]
           end
-          array_items[:format] = @parsed_param.delete(:format) if @parsed_param[:format]
+          array_items[:format] = @parsed_param[:schema].delete(:format) if @parsed_param[:schema][:format]
 
           values = value_type[:values] || nil
           enum_or_range_values = parse_enum_or_range_values(values)
@@ -86,8 +90,8 @@ module GrapeSwagger
           array_items[:default] = value_type[:default] if value_type[:default].present?
 
           @parsed_param[:in] = param_type || 'formData'
-          @parsed_param[:items] = array_items
-          @parsed_param[:type] = 'array'
+          @parsed_param[:schema][:items] = array_items
+          @parsed_param[:schema][:type] = 'array'
           @parsed_param[:collectionFormat] = collection_format if DataType.collections.include?(collection_format)
         end
 

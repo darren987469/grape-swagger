@@ -34,8 +34,8 @@ describe '#605 Group Params as Array' do
     specify do
       expect(subject['paths']['/array_of_range']['post']['parameters']).to eql(
         [
-          { 'in' => 'formData', 'name' => 'array_of_range_string', 'type' => 'array', 'items' => { 'type' => 'string', 'enum' => %w[a b c] }, 'required' => true },
-          { 'in' => 'formData', 'name' => 'array_of_range_integer', 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'enum' => [1, 2, 3] }, 'required' => true }
+          { 'in' => 'formData', 'name' => 'array_of_range_string', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string', 'enum' => %w[a b c] } }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'array_of_range_integer', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'enum' => [1, 2, 3] } }, 'required' => true }
         ]
       )
     end
@@ -50,8 +50,8 @@ describe '#605 Group Params as Array' do
     specify do
       expect(subject['paths']['/array_with_default']['post']['parameters']).to eql(
         [
-          { 'in' => 'formData', 'name' => 'array_with_default_string', 'type' => 'array', 'items' => { 'type' => 'string', 'default' => 'abc' }, 'required' => true },
-          { 'in' => 'formData', 'name' => 'array_with_default_integer', 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'default' => 123 }, 'required' => true }
+          { 'in' => 'formData', 'name' => 'array_with_default_string', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'string', 'default' => 'abc' } }, 'required' => true },
+          { 'in' => 'formData', 'name' => 'array_with_default_integer', 'schema' => { 'type' => 'array', 'items' => { 'type' => 'integer', 'format' => 'int32', 'default' => 123 } }, 'required' => true }
         ]
       )
     end

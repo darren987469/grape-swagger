@@ -34,7 +34,7 @@ describe 'Params Types' do
       expect(subject).to eq [{
         'in' => 'formData',
         'name' => 'input',
-        'type' => 'string',
+        'schema' => { 'type' => 'string' },
         'required' => true
       }]
     end
@@ -74,9 +74,11 @@ describe 'Params Types' do
       expect(subject).to eq [{
         'in' => 'formData',
         'name' => 'input',
-        'type' => 'string',
-        'format' => 'email',
-        'default' => '42',
+        'schema' => {
+          'type' => 'string',
+          'format' => 'email',
+          'default' => '42'
+        },
         'required' => true
       }]
     end

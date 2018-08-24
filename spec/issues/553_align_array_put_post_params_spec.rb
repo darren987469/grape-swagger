@@ -61,8 +61,10 @@ describe '#553 array of type in post/put params' do
           expect(params).to eql([{
             'in' => 'formData',
             'name' => 'guid',
-            'type' => 'array',
-            'items' => { 'type' => 'string' },
+            'schema' => {
+              'type' => 'array',
+              'items' => { 'type' => 'string' }
+             },
             'required' => true
           }])
         end
@@ -77,14 +79,16 @@ describe '#553 array of type in post/put params' do
               {
                 'in' => 'path',
                 'name' => 'id',
-                'type' => 'string',
+                'schema' => { 'type' => 'string' },
                 'required' => true
               },
               {
                 'in' => 'formData',
                 'name' => 'guid',
-                'type' => 'array',
-                'items' => { 'type' => 'string' },
+                'schema' => {
+                  'type' => 'array',
+                  'items' => { 'type' => 'string' }
+                },
                 'required' => true
               }
             ]
@@ -123,7 +127,7 @@ describe '#553 array of type in post/put params' do
               {
                 'in' => 'path',
                 'name' => 'id',
-                'type' => 'string',
+                'schema' => { 'type' => 'string' },
                 'required' => true
               },
               {

@@ -102,6 +102,7 @@ describe 'a simple mounted api' do
         'paths' => {
           '/' => {
             'get' => {
+              'summary' => 'Document root',
               'description' => 'Document root',
               'produces' => ['application/json'],
               'responses' => { '200' => { 'description' => 'Document root' } },
@@ -110,6 +111,7 @@ describe 'a simple mounted api' do
           },
           '/simple' => {
             'get' => {
+              'summary' => 'This gets something.',
               'description' => 'This gets something.',
               'produces' => ['application/json'],
               'tags' => ['simple'],
@@ -119,6 +121,7 @@ describe 'a simple mounted api' do
           },
           '/simple-test' => {
             'get' => {
+              'summary' => 'This gets something for URL using - separator.',
               'description' => 'This gets something for URL using - separator.',
               'produces' => ['application/json'],
               'tags' => ['simple-test'],
@@ -144,6 +147,7 @@ describe 'a simple mounted api' do
           },
           '/simple_with_headers' => {
             'get' => {
+              'summary' => 'this gets something else',
               'description' => 'this gets something else',
               'produces' => ['application/json'],
               'parameters' => [
@@ -161,6 +165,7 @@ describe 'a simple mounted api' do
           },
           '/items' => {
             'post' => {
+              'summary' => 'this takes an array of parameters',
               'description' => 'this takes an array of parameters',
               'produces' => ['application/json'],
               'consumes' => ['application/json'],
@@ -172,6 +177,7 @@ describe 'a simple mounted api' do
           },
           '/custom' => {
             'get' => {
+              'summary' => 'this uses a custom parameter',
               'description' => 'this uses a custom parameter',
               'produces' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'custom', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'CustomType' } }],
@@ -203,6 +209,7 @@ describe 'a simple mounted api' do
         'paths' => {
           '/simple' => {
             'get' => {
+              'summary' => 'This gets something.',
               'description' => 'This gets something.',
               'produces' => ['application/json'],
               'tags' => ['simple'],
@@ -234,6 +241,7 @@ describe 'a simple mounted api' do
           'paths' => {
             '/simple-test' => {
               'get' => {
+                'summary' => 'This gets something for URL using - separator.',
                 'description' => 'This gets something for URL using - separator.',
                 'produces' => ['application/json'],
                 'tags' => ['simple-test'],
@@ -256,6 +264,7 @@ describe 'a simple mounted api' do
         expect(subject['paths']).to eq(
           '/simple_with_headers' => {
             'get' => {
+              'summary' => 'this gets something else',
               'description' => 'this gets something else',
               'produces' => ['application/json'],
               'parameters' => [
@@ -285,6 +294,7 @@ describe 'a simple mounted api' do
         expect(subject['paths']).to eq(
           '/items' => {
             'post' => {
+              'summary' => 'this takes an array of parameters',
               'description' => 'this takes an array of parameters',
               'produces' => ['application/json'],
               'consumes' => ['application/json'],
@@ -308,6 +318,7 @@ describe 'a simple mounted api' do
         expect(subject['paths']).to eq(
           '/custom' => {
             'get' => {
+              'summary' => 'this uses a custom parameter',
               'description' => 'this uses a custom parameter',
               'produces' => ['application/json'],
               'parameters' => [{ 'in' => 'formData', 'name' => 'custom', 'description' => 'array of items', 'required' => false, 'type' => 'array', 'items' => { 'type' => 'CustomType' } }],

@@ -89,7 +89,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/response_headers']['get']).to eql(
-        'description' => 'This returns headers',
+        'summary' => 'This returns headers',
         'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This returns headers', 'schema' => { '$ref' => '#/definitions/UseResponse' }, 'headers' => header_200 },
@@ -119,7 +119,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/no_content_response_headers']['delete']).to eql(
-        'description' => 'A 204 can have headers too',
+        'summary' => 'A 204 can have headers too',
         'produces' => ['application/json'],
         'responses' => {
           '204' => { 'description' => 'No content', 'headers' => header_204 },
@@ -149,7 +149,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/file_response_headers']['get']).to eql(
-        'description' => 'A file can have headers too',
+        'summary' => 'A file can have headers too',
         'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'A file can have headers too', 'headers' => header_200, 'schema' => { 'type' => 'file' } },
@@ -200,7 +200,7 @@ describe 'response with headers' do
 
     specify do
       expect(subject['paths']['/response_no_headers']['get']).to eql(
-        'description' => 'This does not return headers',
+        'summary' => 'This does not return headers',
         'produces' => ['application/json'],
         'responses' => {
           '200' => { 'description' => 'This does not return headers', 'schema' => { '$ref' => '#/definitions/UseResponse' } },

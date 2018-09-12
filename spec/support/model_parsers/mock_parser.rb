@@ -199,7 +199,7 @@ RSpec.shared_context 'mock swagger example' do
       'paths' => {
         '/v3/other_thing/{elements}' => {
           'get' => {
-            'description' => 'nested route inside namespace',
+            'summary' => 'nested route inside namespace',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'body', 'name' => 'elements', 'description' => 'Set of configuration', 'type' => 'array', 'items' => { 'type' => 'string' }, 'required' => true }],
             'responses' => { '200' => { 'description' => 'nested route inside namespace', 'schema' => { '$ref' => '#/definitions/QueryInput' } } },
@@ -211,7 +211,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing' => {
           'get' => {
-            'description' => 'This gets Things.',
+            'summary' => 'This gets Things.',
             'produces' => ['application/json'],
             'parameters' => [
               { 'in' => 'query', 'name' => 'id', 'description' => 'Identity of Something', 'type' => 'integer', 'format' => 'int32', 'required' => false },
@@ -224,7 +224,7 @@ RSpec.shared_context 'mock swagger example' do
             'operationId' => 'getThing'
           },
           'post' => {
-            'description' => 'This creates Thing.',
+            'summary' => 'This creates Thing.',
             'produces' => ['application/json'],
             'consumes' => ['application/json'],
             'parameters' => [
@@ -238,7 +238,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing/{id}' => {
           'get' => {
-            'description' => 'This gets Thing.',
+            'summary' => 'This gets Thing.',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '200' => { 'description' => 'getting a single thing' }, '401' => { 'description' => 'Unauthorized' } },
@@ -246,7 +246,7 @@ RSpec.shared_context 'mock swagger example' do
             'operationId' => 'getThingId'
           },
           'put' => {
-            'description' => 'This updates Thing.',
+            'summary' => 'This updates Thing.',
             'produces' => ['application/json'],
             'consumes' => ['application/json'],
             'parameters' => [
@@ -259,7 +259,7 @@ RSpec.shared_context 'mock swagger example' do
             'operationId' => 'putThingId'
           },
           'delete' => {
-            'description' => 'This deletes Thing.',
+            'summary' => 'This deletes Thing.',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '200' => { 'description' => 'This deletes Thing.', 'schema' => { '$ref' => '#/definitions/Something' } } },
@@ -269,7 +269,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/thing2' => {
           'get' => {
-            'description' => 'This gets Things.',
+            'summary' => 'This gets Things.',
             'produces' => ['application/json'],
             'responses' => { '200' => { 'description' => 'get Horses', 'schema' => { '$ref' => '#/definitions/Something' } }, '401' => { 'description' => 'HorsesOutError', 'schema' => { '$ref' => '#/definitions/ApiError' } } },
             'tags' => ['thing2'],
@@ -278,7 +278,7 @@ RSpec.shared_context 'mock swagger example' do
         },
         '/dummy/{id}' => {
           'delete' => {
-            'description' => 'dummy route.',
+            'summary' => 'dummy route.',
             'produces' => ['application/json'],
             'parameters' => [{ 'in' => 'path', 'name' => 'id', 'type' => 'integer', 'format' => 'int32', 'required' => true }],
             'responses' => { '204' => { 'description' => 'dummy route.' }, '401' => { 'description' => 'Unauthorized' } },
